@@ -56,7 +56,7 @@
   .leader{display:flex;align-items:baseline;gap:6px;font-size:0.82rem;padding:2px 0;}
   .leader .label{white-space:nowrap;color:var(--dim);text-transform:uppercase;font-size:0.72rem;letter-spacing:0.5px;}
   .leader .fill{flex:1;overflow:hidden;white-space:nowrap;color:var(--dim);}
-  .leader .fill::before{content:"..........................................................................................................................................................................................................";}
+  .leader .fill::before{content:"..........................................................................................";}
   .leader .val{white-space:nowrap;color:var(--white);}
   section.about{margin-bottom:30px;}
 
@@ -112,9 +112,44 @@
   }
   .img-preview.show{opacity:1;}
   .img-preview img{display:block;width:100%;height:150px;object-fit:cover;}
+
+  /* boot loader */
+  #loader{
+    position:fixed;inset:0;z-index:300;background:var(--bg);
+    display:flex;align-items:center;justify-content:center;padding:40px;
+    transition:opacity .4s ease;
+  }
+  #loader.hide{opacity:0;pointer-events:none;}
+  .loader-inner{max-width:480px;width:100%;}
+  .loader-line{margin:0 0 7px;color:var(--dim);font-size:0.85rem;opacity:0;transition:opacity .1s ease;}
+  .loader-line.show{opacity:1;}
+  .loader-line .ok{color:var(--green);}
+  .loader-cursor{color:var(--green);}
+  .loader-bar-wrap{display:flex;align-items:center;gap:10px;margin-top:18px;}
+  .loader-bar{flex:1;height:14px;border:1px solid var(--dim);}
+  .loader-bar-fill{height:100%;width:0%;background:var(--green);}
+  .loader-pct{color:var(--cyan);min-width:40px;text-align:right;font-size:0.85rem;}
 </style>
 </head>
 <body>
+
+<noscript><style>#loader{display:none;}</style></noscript>
+<div id="loader" role="status" aria-live="polite">
+  <div class="loader-inner">
+    <div class="loader-line">HAL'TH BIOS (C) 2026</div>
+    <div class="loader-line">Initializing creative core... <span class="ok">OK</span></div>
+    <div class="loader-line">Loading UX/UI module... <span class="ok">OK</span></div>
+    <div class="loader-line">Loading Level Design module... <span class="ok">OK</span></div>
+    <div class="loader-line">Loading Game Dev module... <span class="ok">OK</span></div>
+    <div class="loader-line">Loading Graphic Design module... <span class="ok">OK</span></div>
+    <div class="loader-line">Mounting PROJECTS.DIR (17 items)... <span class="ok">OK</span></div>
+    <div class="loader-line">Starting Hal'th<span class="loader-cursor blink">_</span></div>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar"><div class="loader-bar-fill" id="loaderFill"></div></div>
+      <span class="loader-pct" id="loaderPct">0%</span>
+    </div>
+  </div>
+</div>
 
 <div class="page">
 
@@ -210,6 +245,36 @@
 <div class="img-preview" id="imgPreview"><img id="previewImg" alt=""></div>
 
 <script>
+  // boot loader
+  (function(){
+    const loader = document.getElementById('loader');
+    if(!loader) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce){ loader.remove(); return; }
+    document.body.style.overflow = 'hidden';
+    const lines = loader.querySelectorAll('.loader-line');
+    const fill = document.getElementById('loaderFill');
+    const pct = document.getElementById('loaderPct');
+    let i = 0;
+    const total = lines.length;
+    const timer = setInterval(() => {
+      if(i < total){
+        lines[i].classList.add('show');
+        i++;
+        const p = Math.min(100, Math.round((i/total)*100));
+        fill.style.width = p + '%';
+        pct.textContent = p + '%';
+      } else {
+        clearInterval(timer);
+        setTimeout(() => {
+          loader.classList.add('hide');
+          document.body.style.overflow = '';
+          setTimeout(() => loader.remove(), 450);
+        }, 300);
+      }
+    }, 180);
+  })();
+
   const sendBtn = document.getElementById('sendBtn');
   sendBtn.addEventListener('click', () => {
     const val = document.getElementById('visitorEmail').value.trim();
