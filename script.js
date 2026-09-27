@@ -10,7 +10,7 @@
 //   overview  – short case-study paragraph
 //   role      – your role on the project
 //   tools     – tools/stack used
-//   image     – optional path e.g. "images/mithrim.jpg"; falls
+//   image     – optional path e.g. "assets/mithrim.jpg"; falls
 //               back to a generated placeholder if omitted
 // ---------------------------------------------------------------
 const PROJECTS = [
@@ -18,19 +18,32 @@ const PROJECTS = [
     slug: 'mithrim', name: 'MITHRIM', cat: 'game', catLabel: 'GAME DEV', status: 'ready',
     summary: 'DnD 5e-inspired roguelike, solo-built in Python/Pygame',
     overview: 'A solo-developed roguelike drawing on DnD 5e mechanics, built from the ground up in Python and Pygame. Covers a substantial codebase of entities, combat, and systems.',
-    role: 'Solo developer', tools: 'Python, Pygame'
+    role: 'Solo developer', tools: 'Python, Pygame',
+    image: 'assets/mithrim.jpg',
+    sections: [
+      {
+        title: 'Process',
+        body: 'Built solo from the ground up, starting with core turn-based combat before layering in DnD 5e-inspired systems — classes, abilities, and status effects.\n\nEach system (entities, combat, inventory, dungeon generation) was built as its own module, which kept the codebase manageable as it grew.'
+      },
+      {
+        title: 'Outcome',
+        body: 'A substantial, playable codebase with a full set of entities and mechanics — proof of concept for a solo-developed roguelike, and a foundation to keep expanding.'
+      }
+    ]
   },
   {
     slug: 'ukayed', name: 'UKAYED', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
     summary: 'Secondhand clothing e-commerce concept — full user flows',
     overview: 'A culturally grounded secondhand clothing e-commerce concept, covering wireframes, prototypes, and full user flows for both app and web.',
-    role: 'UX/UI designer', tools: 'Figma'
+    role: 'UX/UI designer', tools: 'Figma',
+    image: 'assets/ukayed.jpg'
   },
   {
     slug: 'envmod-unity', name: 'ENVIRONMENT MOD, UNITY', cat: 'level', catLabel: 'LEVEL DESIGN', status: 'ready',
     summary: 'Collaborative Unity mod — multiple environments, on Nexus Mods',
     overview: 'Collaborative game mod work built with a small team in Unity. Multiple environments shipped, with notable downloads on Nexus Mods.',
-    role: 'Level designer', tools: 'Unity'
+    role: 'Level designer', tools: 'Unity',
+    image: 'assets/envmod-unity.jpg'
   },
 ];
 
@@ -143,8 +156,14 @@ projRows.forEach(row => {
     preview.style.top = top + 'px';
   };
 
-  row.addEventListener('mouseenter', (e) => {
+  const fallback = placeholderFor(p.name, p.cat);
+  const setSrc = () => {
+    previewImg.onerror = () => { previewImg.onerror = null; previewImg.src = fallback; };
     previewImg.src = src;
+  };
+
+  row.addEventListener('mouseenter', (e) => {
+    setSrc();
     preview.classList.add('show');
     position(e.clientX, e.clientY);
   });
@@ -152,7 +171,7 @@ projRows.forEach(row => {
   row.addEventListener('mouseleave', () => preview.classList.remove('show'));
   row.addEventListener('focus', () => {
     const r = row.getBoundingClientRect();
-    previewImg.src = src;
+    setSrc();
     preview.classList.add('show');
     position(r.right, r.top);
   });
@@ -173,7 +192,25 @@ projRows.forEach(row => {
   const modalRole = document.getElementById('modalRole');
   const modalTools = document.getElementById('modalTools');
   const modalOverview = document.getElementById('modalOverview');
+  const modalExtra = document.getElementById('modalExtra');
   const modalClose = document.getElementById('modalClose');
+
+  function renderExtraSections(sections) {
+    modalExtra.innerHTML = '';
+    (sections || []).forEach(sec => {
+      const wrap = document.createElement('div');
+      wrap.className = 'modal-section';
+      const h = document.createElement('h3');
+      h.textContent = sec.title;
+      wrap.appendChild(h);
+      (sec.body.split('\n\n')).forEach(para => {
+        const p = document.createElement('p');
+        p.textContent = para;
+        wrap.appendChild(p);
+      });
+      modalExtra.appendChild(wrap);
+    });
+  }
   let lastTrigger = null;
 
   function openModal(row, animate) {
@@ -189,6 +226,9 @@ projRows.forEach(row => {
     modalRole.textContent = p.role;
     modalTools.textContent = p.tools;
     modalOverview.textContent = p.overview;
+    renderExtraSections(p.sections);
+    const fallback = placeholderFor(p.name, p.cat);
+    modalImg.onerror = () => { modalImg.onerror = null; modalImg.src = fallback; };
     modalImg.src = src;
 
     const firstRect = preview.classList.contains('show')

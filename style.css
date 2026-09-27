@@ -46,7 +46,7 @@
   .leader{display:flex;align-items:baseline;gap:6px;font-size:0.82rem;padding:2px 0;}
   .leader .label{white-space:nowrap;color:var(--dim);text-transform:uppercase;font-size:0.72rem;letter-spacing:0.5px;}
   .leader .fill{flex:1;overflow:hidden;white-space:nowrap;color:var(--dim);}
-  .leader .fill::before{content:"..........................................................................................";}
+  .leader .fill::before{content:"..............................................................................................................................................................................................................................................................................";}
   .leader .val{white-space:nowrap;color:var(--white);}
   section.about{margin-bottom:30px;}
 
