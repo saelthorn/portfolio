@@ -1,84 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="script" href="app.js">
-    <title>hal. portfolio site | home</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hal'th — Creative Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0000AA;
+    --white:#ffffff;
+    --green:#33ff77;
+    --cyan:#4de8ff;
+    --yellow:#ffe066;
+    --dim:#8f9bdd;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;background:var(--bg);color:var(--white);
+    font-family:'JetBrains Mono',monospace;font-size:14px;line-height:1.6;
+  }
+  a{color:var(--cyan);text-decoration:none;}
+  a:hover,a:focus-visible{text-decoration:underline;}
+  :focus-visible{outline:1px dotted var(--white);outline-offset:2px;}
+  .display{font-family:'VT323',monospace;letter-spacing:0.5px;}
+  .blink{animation:blink 1s steps(2,start) infinite;color:var(--green);}
+  @keyframes blink{to{visibility:hidden;}}
+  @media (prefers-reduced-motion:reduce){.blink{animation:none;}}
+
+  .page{display:flex;min-height:100vh;align-items:stretch;}
+  .sidebar{
+    width:360px;flex:0 0 360px;padding:40px 32px 28px;
+    border-right:1px solid var(--green);
+    display:flex;flex-direction:column;
+    position:sticky;top:0;align-self:flex-start;
+    height:100vh;overflow-y:auto;
+  }
+  .content{flex:1;min-width:0;padding:40px 40px 60px;}
+
+  @media (max-width:860px){
+    .page{flex-direction:column;}
+    .sidebar{
+      width:100%;flex:none;border-right:none;border-bottom:1px solid var(--green);
+      position:static;height:auto;overflow-y:visible;
+    }
+  }
+
+  /* sidebar top */
+  .logo{font-size:2.4rem;color:var(--white);margin:0 0 8px;line-height:1;}
+  .tagline{font-size:0.8rem;color:var(--dim);margin:0 0 30px;max-width:30ch;}
+
+  h2{font-family:'VT323',monospace;font-size:1.3rem;color:var(--green);margin:0 0 12px;letter-spacing:1px;}
+
+  .leader{display:flex;align-items:baseline;gap:6px;font-size:0.82rem;padding:2px 0;}
+  .leader .label{white-space:nowrap;color:var(--dim);text-transform:uppercase;font-size:0.72rem;letter-spacing:0.5px;}
+  .leader .fill{flex:1;overflow:hidden;white-space:nowrap;color:var(--dim);}
+  .leader .fill::before{content:"..........................................................................................................................................................................................................";}
+  .leader .val{white-space:nowrap;color:var(--white);}
+  section.about{margin-bottom:30px;}
+
+  .role-list{list-style:none;margin:0 0 40px;padding:0;}
+  .role-list li{margin-bottom:4px;}
+  .role-list button{
+    background:none;border:none;color:var(--white);font-family:inherit;font-size:0.82rem;
+    cursor:pointer;padding:2px 0;text-align:left;
+  }
+  .role-list button::before{content:"[ ";color:var(--dim);}
+  .role-list button::after{content:" ]";color:var(--dim);}
+  .role-list button.active,.role-list button:hover,.role-list button:focus-visible{color:var(--cyan);}
+
+  .sidebar-spacer{flex:1;}
+
+  /* sidebar footer */
+  .foot{border-top:1px solid var(--dim);padding-top:16px;}
+  .foot-heading{font-size:1.1rem;margin:0 0 8px;color:var(--white);}
+  .mail-row{display:flex;gap:10px;margin-bottom:10px;}
+  .mail-row input{
+    background:none;border:none;border-bottom:1px solid var(--dim);color:var(--white);
+    font-family:'JetBrains Mono',monospace;font-size:0.72rem;padding:4px 2px;width:110px;
+  }
+  .mail-row input::placeholder{color:var(--dim);}
+  .mail-row input:focus{outline:none;border-bottom-color:var(--cyan);}
+  .mail-row button{background:none;border:none;color:var(--green);font-family:inherit;font-size:0.72rem;cursor:pointer;}
+  .foot-blurb{font-size:0.68rem;color:var(--dim);margin:0 0 6px;max-width:26ch;}
+  .foot-links{display:flex;flex-wrap:wrap;gap:8px;font-size:0.66rem;margin-bottom:16px;}
+  .foot-links a{color:var(--dim);}
+  .foot-links a:hover,.foot-links a:focus-visible{color:var(--green);}
+  .foot-big{font-size:clamp(2rem,9vw,2.8rem);color:var(--white);line-height:1;margin-bottom:10px;}
+  .foot-big span{color:var(--green);}
+  .rule-thin{height:1px;background:var(--dim);margin:0 0 8px;}
+  .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:0.62rem;color:var(--dim);}
+  .foot-bottom .keys span{margin-left:10px;color:var(--dim);}
+  .foot-bottom .keys b{color:var(--green);}
+
+  /* projects (right column) */
+  .content h2{font-size:1.9rem;margin-bottom:26px;}
+  .proj-row{cursor:pointer;padding:2px 0;}
+  .proj-row.hidden{display:none;}
+  .proj-row .leader{font-size:0.9rem;}
+  .proj-row .label{color:var(--white);text-transform:none;font-size:0.9rem;font-weight:700;transition:color .1s ease;}
+  .proj-row .val{color:var(--cyan);}
+  .proj-row .val.status-ready{color:var(--green);}
+  .proj-row .val.status-draft{color:var(--dim);}
+  .proj-row:hover .label,.proj-row:focus-within .label{color:var(--cyan);}
+  .desc-line{font-size:0.8rem;color:var(--dim);margin:0 0 16px;}
+
+  .img-preview{
+    position:fixed;z-index:80;width:240px;border:1px solid var(--dim);background:var(--bg);
+    padding:3px;pointer-events:none;opacity:0;transition:opacity .1s ease;
+  }
+  .img-preview.show{opacity:1;}
+  .img-preview img{display:block;width:100%;height:150px;object-fit:cover;}
+</style>
 </head>
 <body>
-    <header>
-        <div class="logo"><a href="#top"><img src="assets/logo.png" alt="logo"></a></div>
-        <ul>
-            <li><a href="#about">about</a></li>
-            <li><a href="#projects">projects</a></li>
-            <li><a href="#contact">contacts</a></li>
-        </ul>
-    </header>
-    <section id="top" class="hero">
-        <div class="para1"><p>a somewhat <br> creative developer</p></div>
-        <img src="assets/atlas-torus-black.png" alt="torus-black">
-        <div class="para2"><p>a somewhat <br> graphic designer</p></div>
+
+<div class="page">
+
+  <aside class="sidebar">
+    <h1 class="logo display">Hal&nbsp;'th<span class="blink">_</span></h1>
+    <p class="tagline">creative developer — ux/ui · level design · game dev · graphic design</p>
+
+    <section class="about" id="about">
+      <h2 class="display">About</h2>
+      <div class="leader"><span class="label">Name</span><span class="fill"></span><span class="val">Hal</span></div>
+      <div class="leader"><span class="label">Role</span><span class="fill"></span><span class="val">Creative Developer</span></div>
+      <div class="leader"><span class="label">Email</span><span class="fill"></span><span class="val"><a href="mailto:ladanan.jeromehal@gmail.com">ladanan.jeromehal@gmail.com</a></span></div>
+      <div class="leader"><span class="label">Location</span><span class="fill"></span><span class="val">Cagayan de Oro City, PH</span></div>
+      <div class="leader"><span class="label">Hours</span><span class="fill"></span><span class="val">Mon–Fri 10–8 · Sat–Sun 2–8</span></div>
     </section>
-    <section class="container">
-        <div class="h1pro">
-            <img src="assets/left.png" alt="lefticon">
-            <h1>PROJECTS</h1>
-            <img src="assets/right.png" alt="righticon">
-        </div>
-        <div id="projects" class="slider-wrapper">
-            <div class="slider">
-                <img id="slide-1" src="assets/project1.png" alt="project1">
-                <img id="slide-2" src="assets/project2.png" alt="project2">
-                <img id="slide-3" src="assets/project3.png" alt="project3">
-                <img id="slide-4" src="assets/project4.png" alt="project4">
-                <img id="slide-5" src="assets/project5.png" alt="project5">
-                <img id="slide-6" src="assets/cpr.png" alt="project6">
-                <img id="slide-7" src="assets/building.png" alt="project7">
-            </div>
-        </div>
-        <div class="slider-nav">
-            <a href="#slide-1"></a>
-            <a href="#slide-2"></a>
-            <a href="#slide-3"></a>
-            <a href="#slide-4"></a>
-            <a href="#slide-5"></a>
-            <a href="#slide-6"></a>
-            <a href="#slide-7"></a>
-        </div>
+
+    <section id="roles">
+      <h2 class="display">Roles</h2>
+      <ul class="role-list" id="filters">
+        <li><button class="active" data-filter="all">ALL</button></li>
+        <li><button data-filter="uxui">UX / UI</button></li>
+        <li><button data-filter="level">LEVEL DESIGN</button></li>
+        <li><button data-filter="game">GAME DEV</button></li>
+        <li><button data-filter="graphic">GRAPHIC DESIGN</button></li>
+      </ul>
     </section>
-    <section id="about">
-        <h1>ABOUT ME</h1>
-        <div class="about1">
-            <img src="assets/aboutme1.png" alt="me1">
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="foot" id="contact">
+      <h3 class="foot-heading display">Get in touch</h3>
+      <div class="mail-row">
+        <input type="email" id="visitorEmail" placeholder="Your email">
+        <button type="button" id="sendBtn">SEND &gt;</button>
+      </div>
+      <p class="foot-blurb">Open for freelance work and collaborations. Let's build something.</p>
+      <div class="foot-links">
+        <a href="#">[ INSTAGRAM ]</a>
+        <a href="#">[ FACEBOOK ]</a>
+        <a href="#">[ LINKEDIN ]</a>
+      </div>
+      <div class="foot-big display">HAL<span>'</span>TH</div>
+      <div class="rule-thin"></div>
+      <div class="foot-bottom">
+        <span>© 2026 Hal'th.</span>
+        <div class="keys">
+          <span><b>F1</b> About</span>
+          <span><b>F2</b> Roles</span>
+          <span><b>F3</b> Projects</span>
         </div>
-        <div class="lilfella2">
-            <img src="assets/lilfella2.png" alt="lilfeller2">
-        </div>
-        <div class="about2">
-            <img src="assets/aboutme2.png" alt="me2">
-        </div>
-        <div class="about3">
-            <img src="assets/aboutme3.png" alt="me3">
-        </div>
-        <div class="lilfella">
-            <img src="assets/lilfella.png" alt="lilfeller">
-        </div>
-        <hr class="line">
-    </section>
-    <section id="contact">
-        <h1>CONTACT ME</h1>
-        <form action="https://formspree.io/f/xjkkpyqe" method="POST">
-            <input type="text" name="first" placeholder="FIrst Name" value="">
-            <input type="text" name="last" placeholder="Last Name" value="">
-            <input type="email" name="email" placeholder="E-mail" value="">
-            <textarea rows="5" cols="60" name="msg" placeholder="Enter Text" autocomplete="off" required id=""></textarea>
-            <button type="submit">Send Message</button>
-        </form>
-    </section>
+      </div>
+    </div>
+  </aside>
+
+  <main class="content" id="projects">
+    <h2 class="display">Projects</h2>
+
+    <div id="projectList">
+      <div class="proj-row" data-cat="game">
+        <div class="leader"><span class="label">MITHRIM</span><span class="fill"></span><span class="val status-ready">GAME DEV</span></div>
+        <p class="desc-line">DnD 5e-inspired roguelike, solo-built in Python/Pygame</p>
+      </div>
+      <div class="proj-row" data-cat="uxui">
+        <div class="leader"><span class="label">UKAYED</span><span class="fill"></span><span class="val status-ready">UX/UI</span></div>
+        <p class="desc-line">Secondhand clothing e-commerce concept — full user flows</p>
+      </div>
+      <div class="proj-row" data-cat="level">
+        <div class="leader"><span class="label">ENVIRONMENT MOD, UNITY</span><span class="fill"></span><span class="val status-ready">LEVEL DESIGN</span></div>
+        <p class="desc-line">Collaborative Unity mod — multiple environments, on Nexus Mods</p>
+      </div>
+
+      <div class="proj-row" data-cat="uxui"><div class="leader"><span class="label">PROJECT 02</span><span class="fill"></span><span class="val status-draft">UX/UI</span></div><p class="desc-line">Add title + description</p></div>
+      <div class="proj-row" data-cat="uxui"><div class="leader"><span class="label">PROJECT 03</span><span class="fill"></span><span class="val status-draft">UX/UI</span></div><p class="desc-line">Add title + description</p></div>
+      <div class="proj-row" data-cat="uxui"><div class="leader"><span class="label">PROJECT 04</span><span class="fill"></span><span class="val status-draft">UX/UI</span></div><p class="desc-line">Add title + description</p></div>
+      <div class="proj-row" data-cat="uxui"><div class="leader"><span class="label">PROJECT 05</span><span class="fill"></span><span class="val status-draft">UX/UI</span></div><p class="desc-line">Add title + description</p></div>
+      <div class="proj-row" data-cat="uxui"><div class="leader"><span class="label">PROJECT 06</span><span class="fill"></span><span class="val status-draft">UX/UI</span></div><p class="desc-line">Add title + description</p></div>
+
+      <div class="proj-row" data-cat="level"><div class="leader"><span class="label">LEVEL 02</span><span class="fill"></span><span class="val status-draft">LEVEL DESIGN</span></div><p class="desc-line">Add title + description</p></div>
+      <div class="proj-row" data-cat="level"><div class="leader"><span class="label">LEVEL 03</span><span class="fill"></span><span class="val status-draft">LEVEL DESIGN</span></div><p class="desc-line">Add title + description</p></div>
+      <div class="proj-row" data-cat="level"><div class="leader"><span class="label">LEVEL 04</span><span class="fill"></span><span class="val status-draft">LEVEL DESIGN</span></div><p class="desc-line">Add title + description</p></div>
+      <div class="proj-row" data-cat="level"><div class="leader"><span class="label">LEVEL 05</span><span class="fill"></span><span class="val status-draft">LEVEL DESIGN</span></div><p class="desc-line">Add title + description</p></div>
+
+      <div class="proj-row" data-cat="graphic"><div class="leader"><span class="label">GRAPHIC 01</span><span class="fill"></span><span class="val status-draft">GRAPHIC</span></div><p class="desc-line">Add title + description</p></div>
+      <div class="proj-row" data-cat="graphic"><div class="leader"><span class="label">GRAPHIC 02</span><span class="fill"></span><span class="val status-draft">GRAPHIC</span></div><p class="desc-line">Add title + description</p></div>
+      <div class="proj-row" data-cat="graphic"><div class="leader"><span class="label">GRAPHIC 03</span><span class="fill"></span><span class="val status-draft">GRAPHIC</span></div><p class="desc-line">Add title + description</p></div>
+      <div class="proj-row" data-cat="graphic"><div class="leader"><span class="label">GRAPHIC 04</span><span class="fill"></span><span class="val status-draft">GRAPHIC</span></div><p class="desc-line">Add title + description</p></div>
+      <div class="proj-row" data-cat="graphic"><div class="leader"><span class="label">GRAPHIC 05</span><span class="fill"></span><span class="val status-draft">GRAPHIC</span></div><p class="desc-line">Add title + description</p></div>
+    </div>
+  </main>
+
+</div>
+
+<div class="img-preview" id="imgPreview"><img id="previewImg" alt=""></div>
+
+<script>
+  const sendBtn = document.getElementById('sendBtn');
+  sendBtn.addEventListener('click', () => {
+    const val = document.getElementById('visitorEmail').value.trim();
+    const subject = encodeURIComponent('Hello from your portfolio');
+    const body = encodeURIComponent(val ? `Reply to: ${val}` : '');
+    window.location.href = `mailto:ladanan.jeromehal@gmail.com?subject=${subject}&body=${body}`;
+  });
+
+  function placeholderFor(name, cat){
+    const colors = {uxui:'#33ff77', level:'#4de8ff', game:'#ffffff', graphic:'#ffe066'};
+    const c = colors[cat] || '#ffffff';
+    const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='320' height='200'>
+      <rect width='100%' height='100%' fill='#0000AA'/>
+      <rect x='4' y='4' width='312' height='192' fill='none' stroke='${c}' stroke-width='2'/>
+      <text x='50%' y='46%' fill='${c}' font-family='monospace' font-size='18' text-anchor='middle'>${name}</text>
+      <text x='50%' y='60%' fill='${c}' font-family='monospace' font-size='11' text-anchor='middle' opacity='0.75'>${cat.toUpperCase()}</text>
+    </svg>`;
+    return 'data:image/svg+xml,' + encodeURIComponent(svg);
+  }
+
+  const preview = document.getElementById('imgPreview');
+  const previewImg = document.getElementById('previewImg');
+  const projRows = document.querySelectorAll('.proj-row');
+
+  projRows.forEach(row => {
+    const name = row.querySelector('.label').textContent.trim();
+    const cat = row.dataset.cat;
+    const src = row.dataset.img || placeholderFor(name, cat);
+
+    const position = (x, y) => {
+      let left = x + 20, top = y + 20;
+      if (left + 250 > window.innerWidth) left = x - 260;
+      if (top + 180 > window.innerHeight) top = y - 190;
+      preview.style.left = left + 'px';
+      preview.style.top = top + 'px';
+    };
+
+    row.addEventListener('mouseenter', (e) => {
+      previewImg.src = src;
+      preview.classList.add('show');
+      position(e.clientX, e.clientY);
+    });
+    row.addEventListener('mousemove', (e) => position(e.clientX, e.clientY));
+    row.addEventListener('mouseleave', () => preview.classList.remove('show'));
+
+    row.setAttribute('tabindex', '0');
+    row.addEventListener('focus', () => {
+      const r = row.getBoundingClientRect();
+      previewImg.src = src;
+      preview.classList.add('show');
+      position(r.right, r.top);
+    });
+    row.addEventListener('blur', () => preview.classList.remove('show'));
+  });
+
+  const filterButtons = document.querySelectorAll('#filters button');
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      projRows.forEach(r => r.classList.toggle('hidden', !(f === 'all' || r.dataset.cat === f)));
+    });
+  });
+</script>
+
 </body>
 </html>
