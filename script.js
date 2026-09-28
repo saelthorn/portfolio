@@ -10,7 +10,7 @@
 //   overview  – short case-study paragraph
 //   role      – your role on the project
 //   tools     – tools/stack used
-//   image     – optional path e.g. "assets/mithrim.jpg"; falls
+//   image     – optional path e.g. "assets/mithrim.png"; falls
 //               back to a generated placeholder if omitted
 // ---------------------------------------------------------------
 const PROJECTS = [
@@ -18,11 +18,12 @@ const PROJECTS = [
     slug: 'mithrim', name: 'MITHRIM', cat: 'game', catLabel: 'GAME DEV', status: 'ready',
     summary: 'DnD 5e-inspired roguelike, solo-built in Python/Pygame',
     overview: 'A solo-developed roguelike drawing on DnD 5e mechanics, built from the ground up in Python and Pygame. Covers a substantial codebase of entities, combat, and systems.',
-    role: 'Solo developer', tools: 'Python, Pygame',
-    image: 'assets/mithrim.jpg',
+    role: 'Programmer, Assets Designer, Level Designer, UX/UI Designer', tools: 'Python, Pygame',
+    image: 'assets/mith.png',
     sections: [
       {
         title: 'Process',
+        image: 'assets/mith.png',
         body: 'Built solo from the ground up, starting with core turn-based combat before layering in DnD 5e-inspired systems — classes, abilities, and status effects.\n\nEach system (entities, combat, inventory, dungeon generation) was built as its own module, which kept the codebase manageable as it grew.'
       },
       {
@@ -35,21 +36,84 @@ const PROJECTS = [
     slug: 'ukayed', name: 'UKAYED', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
     summary: 'Secondhand clothing e-commerce concept — full user flows',
     overview: 'A culturally grounded secondhand clothing e-commerce concept, covering wireframes, prototypes, and full user flows for both app and web.',
-    role: 'UX/UI designer', tools: 'Figma',
-    image: 'assets/ukayed.jpg'
+    role: 'UX/UI Designer', tools: 'Figma',
+    image: 'assets/uxui/ukayed.png',
   },
   {
-    slug: 'envmod-unity', name: 'ENVIRONMENT MOD, UNITY', cat: 'level', catLabel: 'LEVEL DESIGN', status: 'ready',
-    summary: 'Collaborative Unity mod — multiple environments, on Nexus Mods',
-    overview: 'Collaborative game mod work built with a small team in Unity. Multiple environments shipped, with notable downloads on Nexus Mods.',
-    role: 'Level designer', tools: 'Unity',
-    image: 'assets/envmod-unity.jpg'
+    slug: 'bikeplace', name: 'BIKEPLACE', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
+    summary: 'An e-commerce bikeshop website concept with full user flows',
+    overview: 'A concept for a bikeshop e-commerce website, covering wireframes, prototypes, and full user flows.',
+    role: 'UX/UI Designer', tools: 'Figma',
+    image: 'assets/uxui/bikeplace.png'
+  },
+  {
+    slug: 'skyline', name: 'SKYLINE', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
+    summary: 'A single page blog concept for GTR skyline enthusiasts — full user flows.',
+    overview: 'A single-page blog concept designed for Nissan Skyline GT-R enthusiasts, focusing on automotive culture, builds, history, and community. The project explores the experience from initial wireframes to interactive prototypes, with complete user flows showing how users discover, read, and navigate content.',
+    role: 'UX/UI Designer', tools: 'Figma',
+    image: 'assets/uxui/skyline.png'
+  },
+  {
+    slug: 'learnease', name: 'LEARN EASE', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
+    summary: 'An AI-powered to-do app concept for students — full user flows.',
+    overview: 'An AI-powered to-do app concept designed for students to organize tasks, manage their workload, and improve learning. The project explores the experience from initial wireframes to interactive prototypes, with full user flows showing how students create, prioritize, and complete tasks.',
+    role: 'UX/UI Designer', tools: 'Figma',
+    image: 'assets/uxui/learn.png'
+  },
+  {
+    slug: 'adventurers guild', name: 'ADVENTURERS GUILD', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
+    summary: 'A concept for a fantasy guild management app — full user flows.',
+    overview: 'A fantasy guild management app concept designed to help adventurers manage quests, parties, members, and guild activities. The project covers the design process from initial wireframes to interactive prototypes, with full user flows demonstrating how users navigate and manage their guild.',
+    role: 'UX/UI Designer', tools: 'Figma',
+    image: 'assets/uxui/advent.png'
+  },
+  {
+    slug: 'antho b.', name: 'ANTHO B.', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
+    summary: 'A e-commerce concept for a flowershop — full user flows.',
+    overview: 'An e-commerce concept for a flower shop, designed to make browsing, selecting, and ordering floral arrangements simple and intuitive. The project covers the design process from initial wireframes to interactive prototypes, with full user flows demonstrating the shopping and checkout experience.',
+    role: 'UX/UI Designer', tools: 'Figma',
+    image: 'assets/uxui/antho.png'
+  },
+  {
+    slug: 'shedungent', name: 'SHEDUNGENT', cat: 'level', catLabel: 'LEVEL DESIGN', status: 'ready',
+    summary: 'A solo work for castle/dungeon in the Wrothgarian Mts. in TESII:Daggerfall',
+    overview: 'A castle and dungeon environment set in the Wrothgarian Mountains of The Elder Scrolls II: Daggerfall, designed with a focus on environmental storytelling, level design, and atmospheric world-building. The project explores the use of architecture, clutter, layout, and visual details to create a believable and immersive fantasy location.',
+    role: 'Level Designer', tools: 'Unity',
+    image: 'assets/level/shed.png'
+  },
+  {
+    slug: 'orsinium', name: 'ORSINIUM', cat: 'level', catLabel: 'LEVEL DESIGN', status: 'ready',
+    summary: 'A team project of revamping Orsinium City in TESII:Daggerfall',
+    overview: 'A collaborative project to recreate the city of Orsinium in The Elder Scrolls II: Daggerfall, focusing on level design, environmental storytelling, and historical accuracy. The project involved designing the city layout, buildings, and interiors to reflect the culture and history of the Orcs in Tamriel.',
+    role: 'Level Designer', tools: 'Unity',
+    image: 'assets/level/orsinium.png'
+  },
+  {
+    slug: 'horn', name: 'KNIGHTS OF THE HORN', cat: 'level', catLabel: 'LEVEL DESIGN', status: 'ready',
+    summary: 'A team project of revamping Knights of the Horn Faction in TESII:Daggerfall',
+    overview: 'A collaborative project to redesign the Knights of the Horn faction in The Elder Scrolls II: Daggerfall, focusing on level design and faction lore. The project involved creating new interiors, layouts, and environmental storytelling elements to enhance the player experience.',
+    role: 'Level Designer', tools: 'Unity',
+    image: 'assets/level/knightshorn.png'
+  },
+  {
+    slug: 'dbrotherhood', name: 'DARK BROTHERHOOD', cat: 'level', catLabel: 'LEVEL DESIGN', status: 'ready',
+    summary: 'A team project of revamping Dark Brotherhood Guild in TESII:Daggerfall',
+    overview: 'A collaborative project to redesign the Dark Brotherhood Guild in The Elder Scrolls II: Daggerfall, focusing on level design and faction lore. The project involved creating new interiors, layouts, and environmental storytelling elements to enhance the player experience.',
+    role: 'Level Designer', tools: 'Unity',
+    image: 'assets/level/dbrotherhood.png'
+  },
+  {
+    slug: 'ida', name: 'IDA CITY', cat: 'level', catLabel: 'LEVEL DESIGN', status: 'ready',
+    summary: 'A solo work level design for Bad Business a shooter game in Roblox',
+    overview: 'A solo project to design a level for the game "Bad Business" in Roblox, focusing on creating an engaging and balanced environment for players. The project involved designing the layout, cover points, and flow of the level to enhance gameplay and player experience.',
+    role: 'Level Designer', tools: 'Roblox Studio',
+    image: 'assets/level/ida.png'
   },
 ];
 
 // Placeholder projects — swap in real details as they're ready.
 const CATEGORY_COUNTS = { uxui: 6, level: 5, graphic: 5 };
-const CATEGORY_LABELS = { uxui: 'UX/UI', level: 'LEVEL DESIGN', graphic: 'GRAPHIC' };
+const CATEGORY_LABELS = { uxui: 'UX/UI', level: 'LEVEL DESIGN', graphic: 'GRAPHIC DESIGN' };
 Object.entries(CATEGORY_COUNTS).forEach(([cat, count]) => {
   const already = PROJECTS.filter(p => p.cat === cat).length;
   for (let i = already + 1; i <= count; i++) {
