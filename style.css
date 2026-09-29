@@ -133,6 +133,15 @@
   .modal-section{margin-bottom:26px;}
   .modal-section h3{font-family:'VT323',monospace;font-size:1.15rem;color:var(--green);margin:0 0 8px;letter-spacing:0.5px;}
   .modal-section p{font-size:0.88rem;color:var(--dim);line-height:1.7;margin:0;max-width:64ch;}
+  .modal-section p + p{margin-top:10px;}
+
+  /* images inside case-study sections */
+  .section-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:16px;}
+  .section-gallery.single{grid-template-columns:1fr;}
+  .section-fig{margin:0;}
+  .section-fig img{display:block;width:100%;height:auto;border:1px solid var(--dim);}
+  .section-fig figcaption{font-size:0.7rem;color:var(--dim);margin-top:6px;}
+  .section-fig figcaption::before{content:"> ";color:var(--green);}
 
   /* boot loader */
   #loader{
