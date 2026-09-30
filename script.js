@@ -21,17 +21,25 @@ const PROJECTS = [
     slug: 'mithrim', name: 'MITHRIM', cat: 'game', catLabel: 'GAME DEV', status: 'ready',
     summary: 'DnD 5e-inspired roguelike, solo-built in Python/Pygame',
     overview: 'A solo-developed roguelike drawing on DnD 5e mechanics, built from the ground up in Python and Pygame. Covers a substantial codebase of entities, combat, and systems.',
-    role: 'Programmer, Assets Designer, Level Designer, UX/UI Designer', tools: 'Python, Pygame',
-    image: 'assets/mith.png',
+    role: 'Game Developer,\n Gameplay Programmer, \n Assets Designer, \n Level Designer, \n UX/UI Designer', tools: 'Python, Pygame, Figma',
+    image: 'assets/game/mith.png',
     sections: [
       {
-        title: 'Process',
-        image: 'assets/uxui/learn.png',
-        body: 'Built solo from the ground up, starting with core turn-based combat before layering in DnD 5e-inspired systems — classes, abilities, and status effects.\n\nEach system (entities, combat, inventory, dungeon generation) was built as its own module, which kept the codebase manageable as it grew.'
+        image: 'assets/game/mithrim_screenshot1.png', caption: 'Combat Encounter in Mithrim, showing a player character and his companions being ambushed by Giant Spiders.',
+        title: 'The Challenge',
+        body: 'The main challenge was creating a game that felt like a cohesive RPG rather than simply a collection of mechanics. \n\nEarly versions focused heavily on combat and item-based progression. As development continued, the project expanded toward deeper character progression, environmental interaction, AI behaviors, exploration, and a more reactive world.'
       },
       {
-        title: 'Outcome',
-        body: 'A substantial, playable codebase with a full set of entities and mechanics — proof of concept for a solo-developed roguelike, and a foundation to keep expanding.'
+        title: 'Design & Development',
+        body: 'I designed and implemented the game\'s core systems, including: \n\n -Turn-based combat with attacks, critical hits, status effects, saving throws, and special abilities.\n\n -D&D-inspired progression with classes, equipment, abilities, and character development.\n\n -Procedural generation for dungeons and overworld environments.\n\n -Monster AI with pathfinding, detection, ranged attacks, and different behavioral patterns.\n\n -Environmental systems including traps, hazards, lighting, line-of-sight, hunger, resting, and exploration.\n\n -Pixel-art assets created specifically for the project.\n\n The game grew to include 80+ entities, covering player options, monsters, NPCs, and other interactive elements.'
+      },
+      {
+        title: 'Level Design',
+        body: 'A major focus of Mithrim became the relationship between environment and gameplay. \n\n Rather than treating levels as simple spaces for combat, environments were designed to create tactical situations through: \n\n Terrain → Positioning → Visibility → Enemy Behavior → Player Decisions \n\n Narrow corridors, open rooms, environmental hazards, lighting, enemy placement, and points of interest all influence how encounters unfold.'
+      },
+      {
+        title: 'Result',
+        body: 'Mithrim evolved from a small roguelike experiment into a larger RPG-focused project combining gameplay programming, procedural generation, level design, AI, UI, and environmental design. \n\n The project continues to serve as a practical demonstration of designing and implementing interconnected game systems from the ground up.'
       }
     ]
   },
