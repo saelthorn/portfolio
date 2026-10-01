@@ -5,7 +5,7 @@
 //   slug      – used for the shareable #project= URL, keep unique
 //   cat       – 'uxui' | 'level' | 'game' | 'graphic'
 //   catLabel  – text shown for the category
-//   status    – 'ready' | 'draft'
+//   status    – 'ready' | 'draft' | 'in-dev'
 //   summary   – one-line description shown in the list + modal
 //   overview  – short case-study paragraph
 //   role      – your role on the project
@@ -24,7 +24,7 @@ const PROJECTS = [
     slug: 'mithrim', name: 'MITHRIM', cat: 'game', catLabel: 'GAME DEV', status: 'in-dev',
     summary: 'DnD 5e-inspired roguelike, solo-built in Python/Pygame',
     overview: 'A solo-developed roguelike drawing on DnD 5e mechanics, built from the ground up in Python and Pygame. Covers a substantial codebase of entities, combat, and systems.',
-    role: 'Game Developer,\n Gameplay Programmer, \n Assets Designer, \n Level Designer, \n UX/UI Designer', tools: 'Python, Pygame, Figma',
+    role: 'Game Developer,\n\n Gameplay Programmer, \n\n Assets Designer, \n\n UX/UI Designer', tools: 'Python, Pygame, Figma',
     image: 'assets/game/mith.png',
     sections: [
       {
@@ -124,6 +124,41 @@ const PROJECTS = [
     role: 'Level Designer', tools: 'Roblox Studio',
     image: 'assets/level/ida.png'
   },
+  {
+    slug: 'panama', name: 'PANAMA', cat: 'graphic', catLabel: 'GRAPHIC DESIGN', status: 'ready',
+    summary: 'A solo work level design for Bad Business a shooter game in Roblox',
+    overview: 'A solo project to design a level for the game "Bad Business" in Roblox, focusing on creating an engaging and balanced environment for players. The project involved designing the layout, cover points, and flow of the level to enhance gameplay and player experience.',
+    role: 'Level Designer', tools: 'Roblox Studio',
+    image: 'assets/graphic/panama.png'
+  },
+  {
+    slug: 'rekindle', name: 'REKINDLE', cat: 'graphic', catLabel: 'GRAPHIC DESIGN', status: 'ready',
+    summary: 'A solo work level design for Bad Business a shooter game in Roblox',
+    overview: 'A solo project to design a level for the game "Bad Business" in Roblox, focusing on creating an engaging and balanced environment for players. The project involved designing the layout, cover points, and flow of the level to enhance gameplay and player experience.',
+    role: 'Level Designer', tools: 'Roblox Studio',
+    image: 'assets/graphic/rekindle.png'
+  },
+  {
+    slug: 'house', name: 'RENOVATE', cat: 'graphic', catLabel: 'GRAPHIC DESIGN', status: 'ready',
+    summary: 'A solo work level design for Bad Business a shooter game in Roblox',
+    overview: 'A solo project to design a level for the game "Bad Business" in Roblox, focusing on creating an engaging and balanced environment for players. The project involved designing the layout, cover points, and flow of the level to enhance gameplay and player experience.',
+    role: 'Level Designer', tools: 'Roblox Studio',
+    image: 'assets/graphic/house.png'
+  },
+  {
+    slug: 'invaders', name: 'UNWELCOME INVADERS', cat: 'graphic', catLabel: 'GRAPHIC DESIGN', status: 'ready',
+    summary: 'A solo work level design for Bad Business a shooter game in Roblox',
+    overview: 'A solo project to design a level for the game "Bad Business" in Roblox, focusing on creating an engaging and balanced environment for players. The project involved designing the layout, cover points, and flow of the level to enhance gameplay and player experience.',
+    role: 'Level Designer', tools: 'Roblox Studio',
+    image: 'assets/graphic/invaders.png'
+  },
+  {
+    slug: 'cdo', name: 'HISTORY OF CDO', cat: 'graphic', catLabel: 'GRAPHIC DESIGN', status: 'ready',
+    summary: 'A solo work level design for Bad Business a shooter game in Roblox',
+    overview: 'A solo project to design a level for the game "Bad Business" in Roblox, focusing on creating an engaging and balanced environment for players. The project involved designing the layout, cover points, and flow of the level to enhance gameplay and player experience.',
+    role: 'Level Designer', tools: 'Roblox Studio',
+    image: 'assets/graphic/cdoc.png'
+  },
 ];
 
 // Placeholder projects — swap in real details as they're ready.
@@ -166,7 +201,7 @@ PROJECTS.forEach(p => {
   row.innerHTML = `
     <div class="leader">
       <span class="label">${p.name}</span><span class="fill"></span>
-      <span class="val ${p.status === 'ready' ? 'status-ready' : 'status-draft'}">${p.catLabel}</span>
+      <span class="val ${p.status === 'ready' ? 'status-ready' : p.status === 'in-dev' ? 'status-in-dev' : 'status-draft'}">${p.catLabel}</span>
     </div>
     <p class="desc-line">${p.summary}</p>`;
   projectList.appendChild(row);
@@ -367,8 +402,8 @@ projRows.forEach(row => {
     modalTitle.textContent = p.name;
     modalSummary.textContent = p.summary;
     modalCat.textContent = p.catLabel;
-    modalStatus.textContent = p.status === 'ready' ? 'READY' : 'DRAFT' ? 'IN-DEVELOPMENT' : 'IN-DEVELOPMENT';
-    modalStatus.className = 'mv ' + (p.status === 'ready' ? 'status-ready' : 'status-draft' ? 'in-dev' : 'in-dev');
+    modalStatus.textContent = p.status === 'ready' ? 'READY' : p.status === 'in-dev' ? 'IN-DEVELOPMENT' : 'DRAFT';
+    modalStatus.className = 'mv ' + (p.status === 'ready' ? 'status-ready' : p.status === 'in-dev' ? 'status-in-dev' : 'status-draft');
     modalRole.textContent = p.role;
     modalTools.textContent = p.tools;
     modalOverview.textContent = p.overview;
