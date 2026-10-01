@@ -13,19 +13,22 @@
 //   image     – optional path e.g. "assets/mithrim.png"; falls
 //               back to a generated placeholder if omitted
 //   sections  – optional extra case-study sections:
-//               { title, body, image | images, caption }
-//               body and images are each optional
+//               { title, body, image | images, video | videos, caption }
+//               body and media are each optional. Images and videos can
+//               be mixed freely; video type is auto-detected from the
+//               file extension (.mp4/.webm/.ogg/.mov), or set explicitly
+//               with { src, type: 'video' }.
 // ---------------------------------------------------------------
 const PROJECTS = [
   {
-    slug: 'mithrim', name: 'MITHRIM', cat: 'game', catLabel: 'GAME DEV', status: 'ready',
+    slug: 'mithrim', name: 'MITHRIM', cat: 'game', catLabel: 'GAME DEV', status: 'in-dev',
     summary: 'DnD 5e-inspired roguelike, solo-built in Python/Pygame',
     overview: 'A solo-developed roguelike drawing on DnD 5e mechanics, built from the ground up in Python and Pygame. Covers a substantial codebase of entities, combat, and systems.',
     role: 'Game Developer,\n Gameplay Programmer, \n Assets Designer, \n Level Designer, \n UX/UI Designer', tools: 'Python, Pygame, Figma',
     image: 'assets/game/mith.png',
     sections: [
       {
-        image: 'assets/game/mithrim_screenshot1.png', caption: 'Combat Encounter in Mithrim, showing a player character and his companions being ambushed by Giant Spiders.',
+        video: 'assets/game/mithrim_gameplay.mp4',
         title: 'The Challenge',
         body: 'The main challenge was creating a game that felt like a cohesive RPG rather than simply a collection of mechanics. \n\nEarly versions focused heavily on combat and item-based progression. As development continued, the project expanded toward deeper character progression, environmental interaction, AI behaviors, exploration, and a more reactive world.'
       },
@@ -35,6 +38,7 @@ const PROJECTS = [
       },
       {
         title: 'Level Design',
+        image: 'assets/game/mithrim_screenshot1.png', caption: 'Combat Encounter in Mithrim, showing a player character and his companions being ambushed by Giant Spiders.',
         body: 'A major focus of Mithrim became the relationship between environment and gameplay. \n\n Rather than treating levels as simple spaces for combat, environments were designed to create tactical situations through: \n\n Terrain → Positioning → Visibility → Enemy Behavior → Player Decisions \n\n Narrow corridors, open rooms, environmental hazards, lighting, enemy placement, and points of interest all influence how encounters unfold.'
       },
       {
@@ -48,13 +52,7 @@ const PROJECTS = [
     summary: 'Secondhand clothing e-commerce concept — full user flows',
     overview: 'A culturally grounded secondhand clothing e-commerce concept, covering wireframes, prototypes, and full user flows for both app and web.',
     role: 'UX/UI Designer', tools: 'Figma',
-    image: 'assets/uxui/ukayed.png', 
-    sections: [
-      {      
-        title: 'Process',
-        body: 'The project began with research into the secondhand clothing market, identifying user needs and pain points. Wireframes were created to outline the user journey, followed by interactive prototypes to test usability and flow. Full user flows were developed to ensure a seamless experience across both app and web platforms.'
-      }
-    ]
+    image: 'assets/uxui/ukayed.png',
   },
   {
     slug: 'bikeplace', name: 'BIKEPLACE', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
@@ -125,41 +123,6 @@ const PROJECTS = [
     overview: 'A solo project to design a level for the game "Bad Business" in Roblox, focusing on creating an engaging and balanced environment for players. The project involved designing the layout, cover points, and flow of the level to enhance gameplay and player experience.',
     role: 'Level Designer', tools: 'Roblox Studio',
     image: 'assets/level/ida.png'
-  },
-  {
-    slug: 'panama', name: 'PANAMA', cat: 'graphic', catLabel: 'GRAPHIC DESIGN', status: 'ready',
-    summary: 'A solo work level design for Bad Business a shooter game in Roblox',
-    overview: 'A solo project to design a level for the game "Bad Business" in Roblox, focusing on creating an engaging and balanced environment for players. The project involved designing the layout, cover points, and flow of the level to enhance gameplay and player experience.',
-    role: 'Level Designer', tools: 'Roblox Studio',
-    image: 'assets/graphic/panama.png'
-  },
-  {
-    slug: 'rekindle', name: 'REKINDLE', cat: 'graphic', catLabel: 'GRAPHIC DESIGN', status: 'ready',
-    summary: 'A solo work level design for Bad Business a shooter game in Roblox',
-    overview: 'A solo project to design a level for the game "Bad Business" in Roblox, focusing on creating an engaging and balanced environment for players. The project involved designing the layout, cover points, and flow of the level to enhance gameplay and player experience.',
-    role: 'Level Designer', tools: 'Roblox Studio',
-    image: 'assets/graphic/rekindle.png'
-  },
-  {
-    slug: 'house', name: 'RENOVATE', cat: 'graphic', catLabel: 'GRAPHIC DESIGN', status: 'ready',
-    summary: 'A solo work level design for Bad Business a shooter game in Roblox',
-    overview: 'A solo project to design a level for the game "Bad Business" in Roblox, focusing on creating an engaging and balanced environment for players. The project involved designing the layout, cover points, and flow of the level to enhance gameplay and player experience.',
-    role: 'Level Designer', tools: 'Roblox Studio',
-    image: 'assets/graphic/house.png'
-  },
-  {
-    slug: 'invaders', name: 'UNWELCOME INVADERS', cat: 'graphic', catLabel: 'GRAPHIC DESIGN', status: 'ready',
-    summary: 'A solo work level design for Bad Business a shooter game in Roblox',
-    overview: 'A solo project to design a level for the game "Bad Business" in Roblox, focusing on creating an engaging and balanced environment for players. The project involved designing the layout, cover points, and flow of the level to enhance gameplay and player experience.',
-    role: 'Level Designer', tools: 'Roblox Studio',
-    image: 'assets/graphic/invaders.png'
-  },
-  {
-    slug: 'cdo', name: 'HISTORY OF CDO', cat: 'graphic', catLabel: 'GRAPHIC DESIGN', status: 'ready',
-    summary: 'A solo work level design for Bad Business a shooter game in Roblox',
-    overview: 'A solo project to design a level for the game "Bad Business" in Roblox, focusing on creating an engaging and balanced environment for players. The project involved designing the layout, cover points, and flow of the level to enhance gameplay and player experience.',
-    role: 'Level Designer', tools: 'Roblox Studio',
-    image: 'assets/graphic/cdoc.png'
   },
 ];
 
@@ -311,18 +274,29 @@ projRows.forEach(row => {
   const modalExtra = document.getElementById('modalExtra');
   const modalClose = document.getElementById('modalClose');
 
-  // A section can include images in any of these ways:
+  // A section can include images and/or videos in any of these ways:
   //   image: 'assets/x.png'                       (+ optional caption: '...')
   //   images: ['assets/a.png', 'assets/b.png']
   //   images: [{ src: 'assets/a.png', caption: '...', alt: '...' }, ...]
-  // Images render after the section text; a missing file is skipped quietly.
-  function sectionImages(sec) {
+  //   video: 'assets/x.mp4'                        (+ optional caption)
+  //   videos: ['assets/a.mp4', { src: 'assets/b.mp4', caption: '...' }]
+  // Media renders after the section text, images and videos mixed in the
+  // order given; a missing file is skipped quietly.
+  const VIDEO_EXT = /\.(mp4|webm|ogg|ogv|mov)(\?.*)?$/i;
+  function mediaType(item) {
+    return item.type || (VIDEO_EXT.test(item.src) ? 'video' : 'image');
+  }
+  function sectionMedia(sec) {
     const list = [];
     if (sec.image) list.push({ src: sec.image, caption: sec.caption });
     (sec.images || []).forEach(item => {
       list.push(typeof item === 'string' ? { src: item } : item);
     });
-    return list;
+    if (sec.video) list.push({ src: sec.video, caption: sec.caption, type: 'video' });
+    (sec.videos || []).forEach(item => {
+      list.push(typeof item === 'string' ? { src: item, type: 'video' } : { type: 'video', ...item });
+    });
+    return list.map(item => ({ ...item, type: mediaType(item) }));
   }
 
   function renderExtraSections(project) {
@@ -340,22 +314,36 @@ projRows.forEach(row => {
         wrap.appendChild(p);
       });
 
-      const imgs = sectionImages(sec);
-      if (imgs.length) {
+      const media = sectionMedia(sec);
+      if (media.length) {
         const gallery = document.createElement('div');
-        gallery.className = 'section-gallery' + (imgs.length === 1 ? ' single' : '');
-        imgs.forEach(item => {
+        gallery.className = 'section-gallery' + (media.length === 1 ? ' single' : '');
+        media.forEach(item => {
           const fig = document.createElement('figure');
           fig.className = 'section-fig';
-          const img = document.createElement('img');
-          img.src = item.src;
-          img.alt = item.alt || (project.name + ' \u2014 ' + sec.title);
-          img.loading = 'lazy';
-          img.onerror = () => {
-            fig.remove();
-            if (!gallery.children.length) gallery.remove();
-          };
-          fig.appendChild(img);
+          let el;
+          if (item.type === 'video') {
+            el = document.createElement('video');
+            el.src = item.src;
+            el.controls = true;
+            el.playsInline = true;
+            el.preload = 'metadata';
+            if (item.poster) el.poster = item.poster;
+            el.addEventListener('error', () => {
+              fig.remove();
+              if (!gallery.children.length) gallery.remove();
+            });
+          } else {
+            el = document.createElement('img');
+            el.src = item.src;
+            el.alt = item.alt || (project.name + ' \u2014 ' + sec.title);
+            el.loading = 'lazy';
+            el.onerror = () => {
+              fig.remove();
+              if (!gallery.children.length) gallery.remove();
+            };
+          }
+          fig.appendChild(el);
           if (item.caption) {
             const cap = document.createElement('figcaption');
             cap.textContent = item.caption;
@@ -379,8 +367,8 @@ projRows.forEach(row => {
     modalTitle.textContent = p.name;
     modalSummary.textContent = p.summary;
     modalCat.textContent = p.catLabel;
-    modalStatus.textContent = p.status === 'ready' ? 'READY' : 'DRAFT';
-    modalStatus.className = 'mv ' + (p.status === 'ready' ? 'status-ready' : 'status-draft');
+    modalStatus.textContent = p.status === 'ready' ? 'READY' : 'DRAFT' ? 'IN-DEVELOPMENT' : 'IN-DEVELOPMENT';
+    modalStatus.className = 'mv ' + (p.status === 'ready' ? 'status-ready' : 'status-draft' ? 'in-dev' : 'in-dev');
     modalRole.textContent = p.role;
     modalTools.textContent = p.tools;
     modalOverview.textContent = p.overview;

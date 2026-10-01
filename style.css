@@ -139,7 +139,7 @@
   .section-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:16px;}
   .section-gallery.single{grid-template-columns:1fr;}
   .section-fig{margin:0;}
-  .section-fig img{display:block;width:100%;height:auto;border:1px solid var(--dim);}
+  .section-fig img,.section-fig video{display:block;width:100%;height:auto;border:1px solid var(--dim);background:#000;}
   .section-fig figcaption{font-size:0.7rem;color:var(--dim);margin-top:6px;}
   .section-fig figcaption::before{content:"> ";color:var(--green);}
 
