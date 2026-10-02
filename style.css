@@ -49,6 +49,8 @@
   .leader .fill{flex:1;overflow:hidden;white-space:nowrap;color:var(--dim);}
   .leader .fill::before{content:"..............................................................................................................................................................................................................................................................................";}
   .leader .val{white-space:nowrap;color:var(--white);}
+  .leader .val.hours-on{color:var(--green);}
+  .leader .val.hours-off{color:var(--dim);}  
   section.about{margin-bottom:30px;}
 
   .role-list{list-style:none;margin:0 0 40px;padding:0;}

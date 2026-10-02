@@ -182,7 +182,7 @@ function placeholderFor(name, cat) {
   const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='320' height='200'>
     <rect width='100%' height='100%' fill='#0000AA'/>
     <rect x='4' y='4' width='312' height='192' fill='none' stroke='${c}' stroke-width='2'/>
-    <text x='50%' y='46%' fill='${c}' font-family='monospace' font-size='16' text-anchor='middle'>${name}</text>
+    <text x='50%' y='46%' fill='${c}' font-family='monospace' font-size='18' text-anchor='middle'>${name}</text>
     <text x='50%' y='60%' fill='${c}' font-family='monospace' font-size='11' text-anchor='middle' opacity='0.75'>${cat.toUpperCase()}</text>
   </svg>`;
   return 'data:image/svg+xml,' + encodeURIComponent(svg);
@@ -484,3 +484,60 @@ filterButtons.forEach(btn => {
     projRows.forEach(r => r.classList.toggle('hidden', !(f === 'all' || r.dataset.cat === f)));
   });
 });
+
+
+// ---------------------------------------------------------------
+// Hours indicator (Philippines time)
+// ---------------------------------------------------------------
+(function () {
+  const el = document.getElementById('hoursVal');
+  if (!el) return;
+
+  const SCHEDULE = {
+    Mon: [9, 18], Tue: [9, 18], Wed: [9, 18], Thu: [9, 18], Fri: [8, 17],
+    Sat: [14, 18],  Sun: [14, 18]
+  };
+  const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  const fmt = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Manila',
+    weekday: 'short',
+    hour: 'numeric', minute: '2-digit', second: '2-digit',
+    hour12: false
+  });
+
+  function phNow() {
+    const p = {};
+    fmt.formatToParts(new Date()).forEach(x => { p[x.type] = x.value; });
+    return {
+      day: p.weekday,
+      hour: parseInt(p.hour, 10) % 24,
+      minute: p.minute,
+      second: p.second
+    };
+  }
+
+  function isOn(day, hour) {
+    const [start, end] = SCHEDULE[day];
+    if (start <= end) return hour >= start && hour <= end;   // same-day window
+    if (hour >= start) return true;                           // tonight's overnight window
+    const prev = DAYS[(DAYS.indexOf(day) + 6) % 7];           // spillover from yesterday
+    const [ps, pe] = SCHEDULE[prev];
+    return ps > pe && hour <= pe;
+  }
+
+  function update() {
+    const { day, hour, minute, second } = phNow();
+    const h12 = hour % 12 || 12;
+    const ampm = hour < 12 ? 'AM' : 'PM';
+    el.textContent = `${h12}:${minute}:${second} ${ampm} PST`;
+
+    const on = isOn(day, hour);
+    el.classList.toggle('hours-on', on);
+    el.classList.toggle('hours-off', !on);
+  }
+
+  el.title = 'Mon–Fri 10PM–8AM · Sat–Sun 2AM–8AM (PH time)';
+  update();
+  setInterval(update, 1000);
+})();
