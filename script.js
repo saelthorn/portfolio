@@ -1,36 +1,18 @@
-// ---------------------------------------------------------------
-// Project data — edit this array to add/update projects. Each
-// project renders both its row in the Projects list and its
-// case-study modal from this single source.
-//   slug      – used for the shareable #project= URL, keep unique
-//   cat       – 'uxui' | 'level' | 'game' | 'graphic'
-//   catLabel  – text shown for the category
-//   status    – 'ready' | 'draft' | 'in-dev'
-//   summary   – one-line description shown in the list + modal
-//   overview  – short case-study paragraph
-//   role      – your role on the project
-//   tools     – tools/stack used
-//   image     – optional path e.g. "assets/mithrim.png"; falls
-//               back to a generated placeholder if omitted
-//   sections  – optional extra case-study sections:
-//               { title, body, image | images, video | videos, caption }
-//               body and media are each optional. Images and videos can
-//               be mixed freely; video type is auto-detected from the
-//               file extension (.mp4/.webm/.ogg/.mov), or set explicitly
-//               with { src, type: 'video' }.
-// ---------------------------------------------------------------
 const PROJECTS = [
   {
     slug: 'mithrim', name: 'MITHRIM', cat: 'game', catLabel: 'GAME DEV', status: 'in-dev',
     summary: 'DnD 5e-inspired roguelike, solo-built in Python/Pygame',
-    overview: 'A solo-developed roguelike drawing on DnD 5e mechanics, built from the ground up in Python and Pygame. Covers a substantial codebase of entities, combat, and systems.',
     role: 'Game Developer,\n\n Gameplay Programmer, \n\n Assets Designer, \n\n UX/UI Designer', tools: 'Python, Pygame, Figma',
     image: 'assets/game/mith.png',
     sections: [
       {
+        title: 'Overview',
+        body: 'I designed and implemented the game\'s core systems, including: \n\n -Turn-based combat with attacks, critical hits, status effects, saving throws, and special abilities.\n\n -D&D-inspired progression with classes, equipment, abilities, and character development.\n\n -Procedural generation for dungeons and overworld environments.\n\n -Monster AI with pathfinding, detection, ranged attacks, and different behavioral patterns.\n\n -Environmental systems including traps, hazards, lighting, line-of-sight, hunger, resting, and exploration.\n\n -Pixel-art assets created specifically for the project.\n\n The game grew to include 80+ entities, covering player options, monsters, NPCs, and other interactive elements.'
+      },
+      {
         video: 'assets/game/mithrim_gameplay.mp4',
         title: 'The Challenge',
-        body: 'The main challenge was creating a game that felt like a cohesive RPG rather than simply a collection of mechanics. \n\nEarly versions focused heavily on combat and item-based progression. As development continued, the project expanded toward deeper character progression, environmental interaction, AI behaviors, exploration, and a more reactive world.'
+        body: 'A solo-developed roguelike drawing on DnD 5e mechanics, built from the ground up in Python and Pygame. Covers a substantial codebase of entities, combat, and systems.'
       },
       {
         title: 'Design & Development',
@@ -50,11 +32,14 @@ const PROJECTS = [
   {
     slug: 'ukayed', name: 'UKAYED', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
     summary: 'A Filipino secondhand fashion marketplace built around discovery and affordability.',
-    overview: 'A secondhand clothing marketplace concept inspired by Filipino ukay-ukay culture. The platform connects buyers and sellers through curated collections, accessible pricing, and a shopping experience built around discovering unique pre-loved fashion.',
     role: 'UX/UI Designer',
     tools: 'Figma',
     image: 'assets/uxui/ukayed.png',
     sections: [
+      {
+        title: 'Overview',
+        body: 'A secondhand clothing marketplace concept inspired by Filipino ukay-ukay culture. The platform connects buyers and sellers through curated collections, accessible pricing, and a shopping experience built around discovering unique pre-loved fashion.'
+      },
       {
         title: 'The Challenge',
         body: 'Create a digital shopping experience that captures the discovery-driven nature of ukay-ukay while making secondhand fashion easier to browse and purchase.'
@@ -76,11 +61,14 @@ const PROJECTS = [
   {
     slug: 'bikeplace', name: 'BIKEPLACE', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
     summary: 'An e-commerce website concept for browsing and purchasing bicycles.',
-    overview: 'A bicycle retail website concept designed to bring product discovery and online shopping into one cohesive experience.',
     role: 'UX/UI Designer',
     tools: 'Figma',
     image: 'assets/uxui/bikeplace.png',
     sections: [
+      {
+        title: 'Overview',
+        body: 'A bicycle retail website concept designed to bring product discovery and online shopping into one cohesive experience.'
+      },
       {
         title: 'The Challenge',
         body: 'Design an online bicycle shopping experience that helps customers navigate products, compare their options, and move through the purchasing journey without unnecessary friction.'
@@ -106,11 +94,14 @@ const PROJECTS = [
     catLabel: 'UX/UI',
     status: 'ready',
     summary: 'A single-page automotive blog for Nissan Skyline GT-R enthusiasts.',
-    overview: 'A single-page blog concept celebrating Nissan Skyline GT-R culture through automotive history, builds, and enthusiast-focused content.',
     role: 'UX/UI Designer',
     tools: 'Figma',
     image: 'assets/uxui/skyline.png',
     sections: [
+      {
+        title: 'Overview',
+        body: 'A single-page blog concept celebrating Nissan Skyline GT-R culture through automotive history, builds, and enthusiast-focused content.'
+      },
       {
         title: 'The Challenge',
         body: 'Create an engaging editorial experience for automotive enthusiasts while presenting different types of content in a clear, visually cohesive layout.'
@@ -132,11 +123,14 @@ const PROJECTS = [
   {
     slug: 'learnease', name: 'LEARN EASE', cat: 'uxui', catLabel: 'UX/UI', status: 'draft',
     summary: 'An AI-powered task management concept for students.',
-    overview: 'A student-focused productivity app concept exploring how task management and AI-assisted organization could help students structure their workload.',
     role: 'UX/UI Designer',
     tools: 'Figma',
     image: 'assets/uxui/learn.png',
     sections: [
+      {
+        title: 'Overview',
+        body: 'A student-focused productivity app concept exploring how task management and AI-assisted organization could help students structure their workload.'
+      },
       {
         title: 'The Challenge',
         body: 'Students often need to manage multiple assignments, deadlines, and responsibilities at once. The design challenge is to present these tasks in a way that feels organized and manageable.'
@@ -158,11 +152,14 @@ const PROJECTS = [
   {
     slug: 'adventurers-guild', name: 'ADVENTURERS GUILD', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
     summary: 'A fantasy-inspired guild management app concept.',
-    overview: 'A fantasy-themed management app concept that brings the structure of an adventurers guild into a digital interface, focusing on quests, parties, members, and guild activities.',
     role: 'UX/UI Designer',
     tools: 'Figma',
     image: 'assets/uxui/advent.png',
     sections: [
+      {
+        title: 'Overview',
+        body: 'A fantasy-themed management app concept that brings the structure of an adventurers guild into a digital interface, focusing on quests, parties, members, and guild activities.'
+      },
       {
         title: 'The Challenge',
         body: 'Translate the familiar idea of a fantasy adventurers guild into a usable digital product, organizing multiple activities without losing the atmosphere of the setting.'
@@ -190,6 +187,10 @@ const PROJECTS = [
     image: 'assets/uxui/antho.png',
     sections: [
       {
+        title: 'Overview',
+        body: 'An e-commerce website concept for a flower shop, designed around presenting floral arrangements and guiding customers through the online ordering experience.'
+      },
+      {
         title: 'The Challenge',
         body: 'Create an online storefront that presents floral arrangements attractively while making it straightforward for customers to browse products and place an order.'
       },
@@ -210,11 +211,14 @@ const PROJECTS = [
   {
     slug: 'shedungent', name: 'SHEDUNGENT', cat: 'level', catLabel: 'LEVEL DESIGN', status: 'ready',
     summary: 'A solo-designed castle and dungeon environment in the Wrothgarian Mountains.',
-    overview: 'A fantasy environment inspired by The Elder Scrolls II: Daggerfall, set in the Wrothgarian Mountains. The project focuses on architectural composition, environmental storytelling, and the use of clutter and spatial layout to create an immersive location.',
     role: 'Level Designer, Environment Designer',
     tools: 'Unity',
     image: 'assets/level/shed.png',
     sections: [
+      {
+        title: 'Overview',
+        body: 'A fantasy environment inspired by The Elder Scrolls II: Daggerfall, set in the Wrothgarian Mountains. The project focuses on architectural composition, environmental storytelling, and the use of clutter and spatial layout to create an immersive location.'
+      },
       {
         title: 'Design Intent',
         body: 'The goal was to create a believable fantasy location that feels integrated into its mountainous setting. Rather than relying on architecture alone, the environment uses spatial composition, props, and environmental details to establish its identity.'
@@ -236,11 +240,14 @@ const PROJECTS = [
   {
     slug: 'orsinium', name: 'ORSINIUM', cat: 'level', catLabel: 'LEVEL DESIGN', status: 'ready',
     summary: 'A collaborative overhaul of Orsinium in The Elder Scrolls II: Daggerfall.',
-    overview: 'A team project focused on revamping Orsinium, the Orcish city in The Elder Scrolls universe. The work explores city layout, architecture, and environmental design to create a more cohesive representation of the settlement.',
     role: 'Level Designer, Environment Designer',
     tools: 'Unity',
     image: 'assets/level/orsinium.png',
     sections: [
+      {
+        title: 'Overview',
+        body: 'A team project focused on revamping Orsinium, the Orcish city in The Elder Scrolls universe. The work explores city layout, architecture, and environmental design to create a more cohesive representation of the settlement.'
+      },
       {
         title: 'The Challenge',
         body: 'Reimagine an established fantasy location while respecting its identity and lore. The environment needed to feel like a cohesive settlement rather than a collection of disconnected buildings and spaces.'
@@ -268,6 +275,10 @@ const PROJECTS = [
     image: 'assets/level/knightshorn.png',
     sections: [
       {
+        title: 'Overview',
+        body: 'A collaborative modding project focused on revamping the Knights of the Horn faction in The Elder Scrolls II: Daggerfall through redesigned interiors, spatial layouts, and environmental details.'
+      },
+      {
         title: 'The Challenge',
         body: 'Develop environments that communicate the identity of an established faction while remaining consistent with Daggerfall’s fantasy setting and visual language.'
       },
@@ -288,11 +299,14 @@ const PROJECTS = [
   {
     slug: 'dbrotherhood', name: 'DARK BROTHERHOOD', cat: 'level', catLabel: 'LEVEL DESIGN', status: 'ready',
     summary: 'A collaborative redesign of the Dark Brotherhood guild in Daggerfall.',
-    overview: 'A team-based overhaul project focused on redesigning Dark Brotherhood spaces in The Elder Scrolls II: Daggerfall, with an emphasis on interior layouts, atmosphere, and environmental storytelling.',
     role: 'Level Designer, Environment Designer',
     tools: 'Unity',
     image: 'assets/level/dbrotherhood.png',
     sections: [
+      {
+        title: 'Overview',
+        body: 'A team-based overhaul project focused on redesigning Dark Brotherhood spaces in The Elder Scrolls II: Daggerfall, with an emphasis on interior layouts, atmosphere, and environmental storytelling.'
+      },
       {
         title: 'Design Intent',
         body: 'Create environments that reflect the secretive identity of the Dark Brotherhood while remaining consistent with the atmosphere and visual language of Daggerfall.'
@@ -314,11 +328,14 @@ const PROJECTS = [
   {
     slug: 'ida', name: 'IDA CITY', cat: 'level', catLabel: 'LEVEL DESIGN', status: 'ready',
     summary: 'A custom multiplayer shooter map created in Roblox Studio for Bad Business.',
-    overview: 'A solo level-design project for Bad Business, a multiplayer first-person shooter on Roblox. The map was designed with attention to spatial layout, player navigation, cover placement, and the flow of combat encounters.',
     role: 'Level Designer',
     tools: 'Roblox Studio',
     image: 'assets/level/ida.png',
     sections: [
+      {
+        title: 'Overview',
+        body: 'A solo level-design project for Bad Business, a multiplayer first-person shooter on Roblox. The map was designed with attention to spatial layout, player navigation, cover placement, and the flow of combat encounters.'
+      },
       {
         title: 'The Challenge',
         body: 'Design a multiplayer shooter environment that provides engaging routes through the map while supporting encounters between opposing players.'
@@ -344,11 +361,14 @@ const PROJECTS = [
     catLabel: 'GRAPHIC DESIGN',
     status: 'ready',
     summary: 'A visual design project focused on composition and communication.',
-    overview: 'A graphic design project exploring visual hierarchy, composition, and the presentation of information through a cohesive visual direction.',
     role: 'Graphic Designer',
     tools: 'Figma, Canva',
     image: 'assets/graphic/panama.png',
     sections: [
+      {
+        title: 'Overview',
+        body: 'A graphic design project exploring visual hierarchy, composition, and the presentation of information through a cohesive visual direction.'
+      },
       {
         title: 'Design Brief',
         body: 'This project explores how visual composition and design choices can communicate an idea clearly while establishing a recognizable visual identity.'
@@ -370,11 +390,14 @@ const PROJECTS = [
     catLabel: 'GRAPHIC DESIGN',
     status: 'ready',
     summary: 'A graphic design project exploring visual identity and storytelling.',
-    overview: 'A visual design project focused on communicating a central concept through considered composition, typography, and imagery.',
     role: 'Graphic Designer',
     tools: 'Figma, Canva',
     image: 'assets/graphic/rekindle.png',
     sections: [
+      {
+        title: 'Overview',
+        body: 'A visual design project focused on communicating a central concept through considered composition, typography, and imagery.'
+      },
       {
         title: 'Design Intent',
         body: 'The goal was to translate the project’s central idea into a clear visual direction, using design choices to establish tone and communicate the intended message.'
@@ -396,11 +419,14 @@ const PROJECTS = [
     catLabel: 'GRAPHIC DESIGN',
     status: 'ready',
     summary: 'A graphic design project focused on presenting a concept through visual communication.',
-    overview: 'A design project exploring how layout, imagery, and typography can be used to communicate a concept through a clear and cohesive visual presentation.',
     role: 'Graphic Designer',
     tools: 'Figma, Canva',
     image: 'assets/graphic/house.png',
     sections: [
+      {
+        title: 'Overview',
+        body: 'A design project exploring how layout, imagery, and typography can be used to communicate a concept through a clear and cohesive visual presentation.'
+      },
       {
         title: 'The Challenge',
         body: 'Present the project’s concept in a way that is visually engaging, easy to understand, and consistent across the composition.'
@@ -422,11 +448,14 @@ const PROJECTS = [
     catLabel: 'GRAPHIC DESIGN',
     status: 'ready',
     summary: 'A graphic design project centered on visual storytelling.',
-    overview: 'A visual design piece exploring the use of composition, typography, and imagery to communicate a central theme and establish a distinctive visual tone.',
     role: 'Graphic Designer',
     tools: 'Figma, Canva',
     image: 'assets/graphic/invaders.png',
     sections: [
+      {
+        title: 'Overview',
+        body: 'A visual design piece exploring the use of composition, typography, and imagery to communicate a central theme and establish a distinctive visual tone.'
+      },
       {
         title: 'Concept',
         body: 'The project explores how a central theme can be translated into a visual composition that communicates its message and establishes an identifiable tone.'
@@ -448,11 +477,14 @@ const PROJECTS = [
     catLabel: 'GRAPHIC DESIGN',
     status: 'ready',
     summary: 'A visual communication project exploring the history of Cagayan de Oro.',
-    overview: 'A graphic design project focused on presenting the history of Cagayan de Oro through an organized and visually engaging presentation of historical information.',
     role: 'Graphic Designer',
     tools: 'Figma, Canva',
     image: 'assets/graphic/cdoc.png',
     sections: [
+      {
+        title: 'Overview',
+        body: 'A graphic design project focused on presenting the history of Cagayan de Oro through an organized and visually engaging presentation of historical information.'
+      },
       {
         title: 'The Challenge',
         body: 'Present historical information in a format that is approachable and easy to follow, balancing the need to communicate information with the need to maintain visual engagement.'
@@ -613,7 +645,6 @@ projRows.forEach(row => {
   const modalStatus = document.getElementById('modalStatus');
   const modalRole = document.getElementById('modalRole');
   const modalTools = document.getElementById('modalTools');
-  const modalOverview = document.getElementById('modalOverview');
   const modalExtra = document.getElementById('modalExtra');
   const modalClose = document.getElementById('modalClose');
 
@@ -642,59 +673,121 @@ projRows.forEach(row => {
     return list.map(item => ({ ...item, type: mediaType(item) }));
   }
 
+  // ---- Bento layout helpers ----
+  const RATIOS = {
+    wide: '21/9', landscape: '16/9', photo: '4/3',
+    square: '1/1', portrait: '3/4', tall: '9/16'
+  };
+  function parseRatio(r) {
+    if (r === undefined || r === null || r === '') return null;
+    if (r === 'auto') return 'auto';
+    if (RATIOS[r]) return RATIOS[r];
+    const m = String(r).match(/^(\d+(?:\.\d+)?)\s*[\/:x]\s*(\d+(?:\.\d+)?)$/i);
+    if (m) return m[1] + '/' + m[2];
+    return (isFinite(r) && Number(r) > 0) ? String(Number(r)) : null;
+  }
+  const clampSpan = (n) => Math.max(1, Math.min(6, Math.round(Number(n)) || 6));
+
+  // Default column spans when you don't set item.span. Every group of
+  // pattern values adds up to a full 6-column row.
+  const AUTO_SPANS = [4, 2, 2, 4, 6, 3, 3];
+  function autoSpans(n) {
+    if (n === 1) return [6];
+    if (n === 2) return [3, 3];
+    if (n === 3) return [6, 3, 3];
+    return Array.from({ length: n }, (_, i) => AUTO_SPANS[i % AUTO_SPANS.length]);
+  }
+  function defaultRatio(span) {
+    return span >= 5 ? '16/9' : span >= 3 ? '4/3' : '1/1';
+  }
+
   function renderExtraSections(project) {
     modalExtra.innerHTML = '';
     (project.sections || []).forEach(sec => {
       const wrap = document.createElement('div');
       wrap.className = 'modal-section';
-      const h = document.createElement('h3');
-      h.textContent = sec.title;
-      wrap.appendChild(h);
+      const grid = document.createElement('div');
+      grid.className = 'bento';
+      wrap.appendChild(grid);
 
-      (sec.body ? sec.body.split('\n\n') : []).forEach(para => {
-        const p = document.createElement('p');
-        p.textContent = para;
-        wrap.appendChild(p);
+      // text tile
+      const paras = sec.body ? sec.body.split('\n\n') : [];
+      let textTile = null;
+      if (sec.title || paras.length) {
+        textTile = document.createElement('div');
+        textTile.className = 'tile tile-text';
+        const ts = clampSpan(sec.textSpan);
+        textTile.dataset.span = ts;
+        textTile.style.setProperty('--span', ts);
+        if (sec.title) {
+          const h = document.createElement('h3');
+          h.textContent = sec.title;
+          textTile.appendChild(h);
+        }
+        paras.forEach(para => {
+          const p = document.createElement('p');
+          p.textContent = para;
+          textTile.appendChild(p);
+        });
+      }
+
+      // media tiles
+      const media = sectionMedia(sec);
+      const auto = autoSpans(media.length);
+      const spans = media.map((item, i) => item.span ? clampSpan(item.span) : auto[i]);
+      // if the last row of auto-sized tiles comes up short, stretch the last tile
+      if (media.length && !media[media.length - 1].span) {
+        let row = 0;
+        spans.forEach(s => { if (row + s > 6) row = 0; row += s; if (row === 6) row = 0; });
+        if (row > 0) spans[spans.length - 1] += 6 - row;
+      }
+      const sectionRatio = parseRatio(sec.ratio);
+
+      const mediaTiles = media.map((item, i) => {
+        const span = spans[i];
+        const tile = document.createElement('figure');
+        tile.className = 'tile tile-media';
+        tile.dataset.span = span;
+        tile.style.setProperty('--span', span);
+
+        const ratio = parseRatio(item.ratio) || sectionRatio || defaultRatio(span);
+        if (ratio === 'auto') tile.classList.add('ratio-auto');
+        else tile.style.setProperty('--ratio', ratio);
+        if (item.fit === 'contain') tile.classList.add('fit-contain');
+
+        let el;
+        if (item.type === 'video') {
+          el = document.createElement('video');
+          el.src = item.src;
+          el.controls = true;
+          el.playsInline = true;
+          el.preload = 'metadata';
+          if (item.poster) el.poster = item.poster;
+          el.addEventListener('error', () => tile.remove());
+        } else {
+          el = document.createElement('img');
+          el.src = item.src;
+          el.alt = item.alt || (project.name + ' \u2014 ' + (sec.title || 'image'));
+          el.loading = 'lazy';
+          el.onerror = () => tile.remove();
+        }
+        if (item.position) el.style.objectPosition = item.position;
+        tile.appendChild(el);
+
+        if (item.caption) {
+          const cap = document.createElement('figcaption');
+          cap.textContent = item.caption;
+          tile.appendChild(cap);
+        }
+        return tile;
       });
 
-      const media = sectionMedia(sec);
-      if (media.length) {
-        const gallery = document.createElement('div');
-        gallery.className = 'section-gallery' + (media.length === 1 ? ' single' : '');
-        media.forEach(item => {
-          const fig = document.createElement('figure');
-          fig.className = 'section-fig';
-          let el;
-          if (item.type === 'video') {
-            el = document.createElement('video');
-            el.src = item.src;
-            el.controls = true;
-            el.playsInline = true;
-            el.preload = 'metadata';
-            if (item.poster) el.poster = item.poster;
-            el.addEventListener('error', () => {
-              fig.remove();
-              if (!gallery.children.length) gallery.remove();
-            });
-          } else {
-            el = document.createElement('img');
-            el.src = item.src;
-            el.alt = item.alt || (project.name + ' \u2014 ' + sec.title);
-            el.loading = 'lazy';
-            el.onerror = () => {
-              fig.remove();
-              if (!gallery.children.length) gallery.remove();
-            };
-          }
-          fig.appendChild(el);
-          if (item.caption) {
-            const cap = document.createElement('figcaption');
-            cap.textContent = item.caption;
-            fig.appendChild(cap);
-          }
-          gallery.appendChild(fig);
-        });
-        wrap.appendChild(gallery);
+      if (sec.textLast) {
+        mediaTiles.forEach(t => grid.appendChild(t));
+        if (textTile) grid.appendChild(textTile);
+      } else {
+        if (textTile) grid.appendChild(textTile);
+        mediaTiles.forEach(t => grid.appendChild(t));
       }
 
       modalExtra.appendChild(wrap);
@@ -714,10 +807,11 @@ projRows.forEach(row => {
     modalStatus.className = 'mv ' + (p.status === 'ready' ? 'status-ready' : p.status === 'in-dev' ? 'status-in-dev' : 'status-draft');
     modalRole.textContent = p.role;
     modalTools.textContent = p.tools;
-    modalOverview.textContent = p.overview;
     renderExtraSections(p);
     const fallback = placeholderFor(p.name, p.cat);
     modalImg.onerror = () => { modalImg.onerror = null; modalImg.src = fallback; };
+    const hr = parseRatio(p.heroRatio);
+    modalImgWrap.style.aspectRatio = (hr && hr !== 'auto') ? hr : '';
     modalImg.src = src;
 
     const firstRect = preview.classList.contains('show')

@@ -1,0 +1,44 @@
+// ---------------------------------------------------------------
+// Project data — edit this array to add/update projects. Each
+// project renders both its row in the Projects list and its
+// case-study modal from this single source.
+//   slug      – used for the shareable #project= URL, keep unique
+//   cat       – 'uxui' | 'level' | 'game' | 'graphic'
+//   catLabel  – text shown for the category
+//   status    – 'ready' | 'draft' | 'in-dev'
+//   summary   – one-line description shown in the list + modal
+//   overview  – short case-study paragraph
+//   role      – your role on the project
+//   tools     – tools/stack used
+//   image     – optional path e.g. "assets/mithrim.png"; falls
+//               back to a generated placeholder if omitted
+//   heroRatio – optional aspect ratio of the big top image in the case
+//               study (see RATIOS below, default 'landscape' / 16:9)
+//   sections  – optional extra case-study sections, laid out as a bento
+//               grid (6 columns):
+//               { title, body, image | images, video | videos, caption,
+//                 ratio, textSpan, textLast }
+//               body and media are each optional. Images and videos can
+//               be mixed freely; video type is auto-detected from the
+//               file extension (.mp4/.webm/.ogg/.mov), or set explicitly
+//               with { src, type: 'video' }.
+//               Layout controls (all optional, sensible defaults):
+//                 section.ratio    – default proportion for every tile in
+//                                    the section
+//                 section.textSpan – how many of the 6 columns the text
+//                                    tile takes (default 6 = full width)
+//                 section.textLast – true puts the text after the images
+//                 item.span        – columns this tile takes, 1-6
+//                 item.ratio       – 'wide' 21:9 | 'landscape' 16:9 |
+//                                    'photo' 4:3 | 'square' 1:1 |
+//                                    'portrait' 3:4 | 'tall' 9:16 |
+//                                    'auto' (natural size) | or any
+//                                    '5/4', '2:1', 1.5 style value
+//                 item.fit         – 'cover' (default, crops) | 'contain'
+//                 item.position    – crop focus, e.g. 'top', '50% 20%'
+//               Example:
+//                 images: [
+//                   { src: 'assets/a.png', span: 4, ratio: 'photo' },
+//                   { src: 'assets/b.png', span: 2, ratio: 'portrait', position: 'top' }
+//                 ]
+// ---------------------------------------------------------------
