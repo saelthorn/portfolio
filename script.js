@@ -41,8 +41,10 @@ const PROJECTS = [
         body: 'A secondhand clothing marketplace concept inspired by Filipino ukay-ukay culture. The platform connects buyers and sellers through curated collections, accessible pricing, and a shopping experience built around discovering unique pre-loved fashion.'
       },
       {
+        videos: [{ src: 'assets/uxui/ukayed_demo.mp4', span: 3, ratio: 'auto', fit: 'default' }],
+        textSpan: 3,
         title: 'The Challenge',
-        body: 'Create a digital shopping experience that captures the discovery-driven nature of ukay-ukay while making secondhand fashion easier to browse and purchase.'
+        body: 'Create a digital shopping experience that brings the excitement of ukay-ukay online, allowing users to discover unique secondhand fashion through intuitive browsing and curated finds.\n\nMake secondhand shopping easier and more convenient with clear product details, transparent pricing, and a seamless purchasing process while preserving the thrill of finding hidden gems.'
       },
       {
         title: 'Design Approach',
@@ -761,7 +763,11 @@ projRows.forEach(row => {
           el.src = item.src;
           el.controls = true;
           el.playsInline = true;
-          el.preload = 'metadata';
+          el.muted = true;                       // browsers only allow autoplay when muted
+          el.setAttribute('muted', '');
+          el.autoplay = true;
+          el.loop = true;
+          el.preload = 'auto';
           if (item.poster) el.poster = item.poster;
           el.addEventListener('error', () => tile.remove());
         } else {
@@ -848,6 +854,7 @@ projRows.forEach(row => {
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    modalExtra.querySelectorAll('video').forEach(v => v.pause());
     if (location.hash.startsWith('#project=')) {
       history.replaceState(null, '', location.pathname + location.search);
     }
@@ -942,4 +949,72 @@ filterButtons.forEach(btn => {
   el.title = 'Mon–Fri 10PM–8AM · Sat–Sun 2AM–8AM (PH time)';
   update();
   setInterval(update, 1000);
+})();
+
+// ---------------------------------------------------------------
+// Glitch on Hover
+// ---------------------------------------------------------------
+(() => {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const SELECTOR = 'a, button, .proj-row';
+  const CHARS = '!<>-_\\/[]{}=+*^?#%&01';
+  const DURATION = 1000; // total time until the last letter locks in
+  const TICK = 40;       // ms between frames
+
+  const running = new Map(); // el -> { timer, nodes }
+
+  const textNodes = el => {
+    const out = [];
+    const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    while (w.nextNode()) if (w.currentNode.nodeValue.trim()) out.push(w.currentNode);
+    return out;
+  };
+
+  const rand = () => CHARS[Math.floor(Math.random() * CHARS.length)];
+
+  function stop(el) {
+    const job = running.get(el);
+    if (!job) return;
+    clearInterval(job.timer);
+    job.nodes.forEach(n => (n.node.nodeValue = n.orig));
+    running.delete(el);
+  }
+
+  function glitch(el) {
+    stop(el);
+    const nodes = textNodes(el).map(node => ({ node, orig: node.nodeValue }));
+    if (!nodes.length) return;
+
+    // total visible characters across all text nodes, so the sweep
+    // moves smoothly across e.g. a project title AND its status
+    const total = nodes.reduce((sum, n) => sum + n.orig.replace(/\s/g, '').length, 0);
+    const start = performance.now();
+
+    const timer = setInterval(() => {
+      const t = (performance.now() - start) / DURATION;
+      if (t >= 1) return stop(el);
+
+      let locked = Math.floor(t * total); // how many chars have resolved so far
+      nodes.forEach(n => {
+        n.node.nodeValue = n.orig.replace(/\S/g, ch => {
+          if (locked > 0) { locked--; return ch; }
+          return rand();
+        });
+      });
+    }, TICK);
+
+    running.set(el, { timer, nodes });
+  }
+
+  document.addEventListener('mouseover', e => {
+    const el = e.target.closest(SELECTOR);
+    if (!el || el.contains(e.relatedTarget)) return;
+    glitch(el);
+  });
+
+  document.addEventListener('focusin', e => {
+    const el = e.target.closest(SELECTOR);
+    if (el) glitch(el);
+  });
 })();

@@ -101,7 +101,7 @@
   .desc-line{font-size:0.8rem;color:var(--dim);margin:0 0 16px;}
 
   .img-preview{
-    position:fixed;z-index:80;width:240px;border:1px solid var(--dim);background:var(--bg);
+    position:fixed;left:0;top:0;will-change:transform;z-index:80;width:240px;border:1px solid var(--dim);background:var(--bg);
     padding:3px;pointer-events:none;opacity:0;transition:opacity .1s ease;
   }
   .img-preview.show{opacity:1;}
@@ -194,3 +194,8 @@
   .loader-bar{flex:1;height:14px;border:1px solid var(--dim);}
   .loader-bar-fill{height:100%;width:0%;background:var(--green);}
   .loader-pct{color:var(--cyan);min-width:40px;text-align:right;font-size:0.85rem;}
+
+  /* glitch / hover perf */
+  a,button,.proj-row{font-variant-ligatures:none;}
+  .leader .fill{contain:layout paint;min-width:0;}
+  .proj-row{contain:layout style;}
