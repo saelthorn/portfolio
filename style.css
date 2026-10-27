@@ -15,7 +15,7 @@
   a{color:var(--cyan);text-decoration:none;}
   a:hover,a:focus-visible{text-decoration:underline;}
   :focus-visible{outline:1px dotted var(--white);outline-offset:2px;}
-  .display{font-family:'VT323',monospace;letter-spacing:0.5px;}
+  .display{font-family:'Doto',monospace;letter-spacing:0.5px;}
   .blink{animation:blink 1s steps(2,start) infinite;color:var(--green);}
   @keyframes blink{to{visibility:hidden;}}
   @media (prefers-reduced-motion:reduce){.blink{animation:none;}}
@@ -32,17 +32,20 @@
 
   @media (max-width:860px){
     .page{flex-direction:column;}
-    .sidebar{
-      width:100%;flex:none;border-right:none;border-bottom:1px solid var(--green);
-      position:static;height:auto;overflow-y:visible;
-    }
+    /* flatten the sidebar so its children can be reordered around the projects */
+    .sidebar{display:contents;}
+    .sidebar .logo,.sidebar .tagline,.sidebar .about,.sidebar #roles{margin-left:32px;margin-right:32px;}
+    .sidebar .logo{margin-top:40px;}
+    .sidebar-spacer{display:none;}
+    .content{order:1;border-top:1px solid var(--green);padding:32px 40px 40px;}
+    .foot{order:2;margin:0 40px 28px;}
   }
 
   /* sidebar top */
   .logo{font-size:2.4rem;color:var(--white);margin:0 0 8px;line-height:1;}
   .tagline{font-size:0.8rem;color:var(--dim);margin:0 0 30px;max-width:30ch;}
 
-  h2{font-family:'VT323',monospace;font-size:1.3rem;color:var(--green);margin:0 0 12px;letter-spacing:1px;}
+  h2{font-family:'Doto',monospace;font-size:1.3rem;color:var(--green);margin:0 0 12px;letter-spacing:0px;}
 
   .leader{display:flex;align-items:baseline;gap:6px;font-size:0.82rem;padding:2px 0;}
   .leader .label{white-space:nowrap;color:var(--dim);text-transform:uppercase;font-size:0.72rem;letter-spacing:0.5px;}
@@ -135,7 +138,7 @@
   .modal-meta .mv.status-ready{color:var(--green);}
   .modal-meta .mv.status-in-dev{color:var(--red);}
   .modal-meta .mv.status-draft{color:var(--dim);}
-  .modal-section h3{font-family:'VT323',monospace;font-size:1.15rem;color:var(--green);margin:0 0 8px;letter-spacing:0.5px;}
+  .modal-section h3{font-family:'Doto',monospace;font-size:1.15rem;color:var(--green);margin:0 0 8px;letter-spacing:0.5px;}
   .modal-section p{font-size:0.88rem;color:var(--dim);line-height:1.7;margin:0;max-width:64ch;}
   .modal-section p + p{margin-top:10px;}
 
