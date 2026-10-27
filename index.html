@@ -60,10 +60,15 @@
 
     <div class="foot" id="contact">
       <h3 class="foot-heading display">Get in touch</h3>
-      <div class="mail-row">
-        <input type="email" id="visitorEmail" placeholder="Your email">
-        <button type="button" id="sendBtn">SEND &gt;</button>
-      </div>
+      <form class="mail-form" id="mailForm" novalidate>
+        <input type="email" id="visitorEmail" name="email" placeholder="Your email" autocomplete="email" required>
+        <textarea id="visitorMsg" name="message" placeholder="Your message" rows="3" required></textarea>
+        <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="mail-actions">
+          <button type="submit" id="sendBtn">SEND &gt;</button>
+          <span class="mail-status" id="mailStatus" role="status" aria-live="polite"></span>
+        </div>
+      </form>
       <p class="foot-blurb">Open for freelance work and collaborations. Let's build something.</p>
       <div class="foot-links">
         <a href="https://www.instagram.com/saelthorn/" target="_blank" rel="noopener">[ INSTAGRAM ]</a>

@@ -41,6 +41,12 @@
     .foot{order:2;margin:0 40px 28px;}
   }
 
+  .sidebar{
+    scrollbar-width:none;       
+    -ms-overflow-style:none;     
+  }
+  .sidebar::-webkit-scrollbar{display:none;}   
+
   /* sidebar top */
   .logo{font-size:2.4rem;color:var(--white);margin:0 0 8px;line-height:1;}
   .tagline{font-size:0.8rem;color:var(--dim);margin:0 0 30px;max-width:30ch;}
@@ -71,14 +77,21 @@
   /* sidebar footer */
   .foot{border-top:1px solid var(--dim);padding-top:16px;}
   .foot-heading{font-size:1.1rem;margin:0 0 8px;color:var(--white);}
-  .mail-row{display:flex;gap:10px;margin-bottom:10px;}
-  .mail-row input{
+  .mail-form{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
+  .mail-form input[type="email"],.mail-form textarea{
     background:none;border:none;border-bottom:1px solid var(--dim);color:var(--white);
-    font-family:'JetBrains Mono',monospace;font-size:0.72rem;padding:4px 2px;width:110px;
+    font-family:'JetBrains Mono',monospace;font-size:0.72rem;padding:4px 2px;width:100%;resize:vertical;
   }
-  .mail-row input::placeholder{color:var(--dim);}
-  .mail-row input:focus{outline:none;border-bottom-color:var(--cyan);}
-  .mail-row button{background:none;border:none;color:var(--green);font-family:inherit;font-size:0.72rem;cursor:pointer;}
+  .mail-form textarea{min-height:56px;}
+  .mail-form input::placeholder,.mail-form textarea::placeholder{color:var(--dim);}
+  .mail-form input:focus,.mail-form textarea:focus{outline:none;border-bottom-color:var(--cyan);}
+  .mail-form .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;}
+  .mail-actions{display:flex;align-items:baseline;gap:12px;}
+  .mail-actions button{background:none;border:none;color:var(--green);font-family:inherit;font-size:0.72rem;cursor:pointer;padding:0;}
+  .mail-actions button:disabled{color:var(--dim);cursor:wait;}
+  .mail-status{font-size:0.66rem;color:var(--dim);}
+  .mail-status.ok{color:var(--green);}
+  .mail-status.err{color:var(--red);}
   .foot-blurb{font-size:0.68rem;color:var(--dim);margin:0 0 6px;max-width:26ch;}
   .foot-links{display:flex;flex-wrap:wrap;gap:8px;font-size:0.66rem;margin-bottom:16px;}
   .foot-links a{color:var(--dim);}

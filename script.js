@@ -581,14 +581,48 @@ const projRows = document.querySelectorAll('.proj-row');
 })();
 
 // ---------------------------------------------------------------
-// Mail form
+// Mail form (Formspree)
 // ---------------------------------------------------------------
-document.getElementById('sendBtn').addEventListener('click', () => {
-  const val = document.getElementById('visitorEmail').value.trim();
-  const subject = encodeURIComponent('Hello from your portfolio');
-  const body = encodeURIComponent(val ? `Reply to: ${val}` : '');
-  window.location.href = `mailto:ladanan.jeromehal@gmail.com?subject=${subject}&body=${body}`;
-});
+(function () {
+  const FORM_ENDPOINT = 'https://formspree.io/f/xdeeerad'; // <- paste yours
+  const form = document.getElementById('mailForm');
+  const btn = document.getElementById('sendBtn');
+  const status = document.getElementById('mailStatus');
+  const emailEl = document.getElementById('visitorEmail');
+  const msgEl = document.getElementById('visitorMsg');
+
+  function say(text, cls) {
+    status.textContent = text;
+    status.className = 'mail-status' + (cls ? ' ' + cls : '');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = emailEl.value.trim();
+    const message = msgEl.value.trim();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { say('> invalid email', 'err'); emailEl.focus(); return; }
+    if (message.length < 3) { say('> message is empty', 'err'); msgEl.focus(); return; }
+
+    btn.disabled = true;
+    say('> sending...');
+
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      if (!res.ok) throw new Error(res.status);
+      form.reset();
+      say('> sent. thanks!', 'ok');
+    } catch (err) {
+      say('> failed. try again?', 'err');
+    } finally {
+      btn.disabled = false;
+    }
+  });
+})();
 
 // ---------------------------------------------------------------
 // Hover / focus image preview
