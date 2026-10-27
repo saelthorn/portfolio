@@ -51,7 +51,11 @@ const PROJECTS = [
       },
       {
         title: 'Design Approach',
-        body: 'I explored a marketplace experience centered on curated collections, product discovery, and accessible pricing. The concept also incorporates a gradual price-reduction model, allowing listed items to decrease in price over time until reaching a seller-defined minimum.'
+        body: 'I explored a marketplace experience centered on curated collections, product discovery, and accessible pricing. The concept also incorporates a gradual price-reduction model, allowing listed items to decrease in price over time until reaching a seller-defined minimum.',
+        images: [
+          { src: 'assets/uxui/ukayed_marketplace.png', span: 3, ratio: '3:7', caption: '...' },
+          { src: 'assets/uxui/ukayed_picks.png', span: 3, ratio: '3:7', caption: '...' },
+        ]      
       },
       {
         title: 'Visual Direction',
