@@ -102,6 +102,14 @@
   .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:0.62rem;color:var(--dim);}
   .foot-bottom .keys span{margin-left:10px;color:var(--dim);}
   .foot-bottom .keys b{color:var(--green);}
+  .foot-links a.resume-btn{
+    color:var(--green);
+    font-weight:700;
+  }
+  .foot-links a.resume-btn:hover,
+  .foot-links a.resume-btn:focus-visible{
+    color:var(--white);
+  }
 
   /* projects (right column) */
   .content h2{font-size:1.9rem;margin-bottom:26px;}
