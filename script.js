@@ -721,15 +721,18 @@ projRows.forEach(row => {
         const ts = clampSpan(sec.textSpan);
         textTile.dataset.span = ts;
         textTile.style.setProperty('--span', ts);
+        const inner = document.createElement('div');
+        inner.className = 'tile-text-inner';
+        textTile.appendChild(inner);
         if (sec.title) {
           const h = document.createElement('h3');
           h.textContent = sec.title;
-          textTile.appendChild(h);
+          inner.appendChild(h);
         }
         paras.forEach(para => {
           const p = document.createElement('p');
           p.textContent = para;
-          textTile.appendChild(p);
+          inner.appendChild(p);
         });
       }
 
