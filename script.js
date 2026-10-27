@@ -606,8 +606,8 @@ projRows.forEach(row => {
 
   const position = (x, y) => {
     let left = x + 20, top = y + 20;
-    if (left + 250 > window.innerWidth) left = x - 260;
-    if (top + 180 > window.innerHeight) top = y - 190;
+    if (left + 340 > window.innerWidth) left = x - 340;
+    if (top + 220 > window.innerHeight) top = y - 230;
     preview.style.left = left + 'px';
     preview.style.top = top + 'px';
   };
