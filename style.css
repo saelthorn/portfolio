@@ -223,6 +223,8 @@
     .project-modal{padding:30px 18px;}
     .tile[data-span="1"],.tile[data-span="2"],.tile[data-span="3"]{grid-column:span 3;}
     .tile[data-span="4"],.tile[data-span="5"],.tile[data-span="6"]{grid-column:1/-1;}
+    .tile.tile-text[data-span]{grid-column:1/-1;}
+    .tile.tile-media:only-of-type{grid-column:1/-1;}
     .tile-text-inner{position:static;max-height:none;overflow:visible;}
   }
 

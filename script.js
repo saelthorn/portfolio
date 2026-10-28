@@ -53,8 +53,8 @@ const PROJECTS = [
         title: 'Design Approach',
         body: 'I explored a marketplace experience centered on curated collections, product discovery, and accessible pricing. The concept also incorporates a gradual price-reduction model, allowing listed items to decrease in price over time until reaching a seller-defined minimum.',
         images: [
-          { src: 'assets/uxui/ukayed_marketplace.png', span: 3, ratio: '3:7', caption: '...' },
-          { src: 'assets/uxui/ukayed_picks.png', span: 3, ratio: '3:7', caption: '...' },
+          { src: 'assets/uxui/ukayed_marketplace.png', span: 3, ratio: 'auto', caption: '...', fit: 'cover' },
+          { src: 'assets/uxui/ukayed_picks.png', span: 3, ratio: 'auto', caption: '...' },
         ]      
       },
       {
@@ -754,6 +754,7 @@ projRows.forEach(row => {
       wrap.className = 'modal-section';
       const grid = document.createElement('div');
       grid.className = 'bento';
+      if (sec.gap) grid.style.gap = sec.gap;   
       wrap.appendChild(grid);
 
       // text tile
@@ -827,6 +828,19 @@ projRows.forEach(row => {
         }
         if (item.position) el.style.objectPosition = item.position;
         tile.appendChild(el);
+
+        // size the tile to the media's real proportions once they're known
+        // (manual ratio stays as the placeholder; 'auto' and contain tiles are left alone)
+        if (ratio !== 'auto' && item.fit !== 'contain') {
+          const apply = () => {
+            const w = el.naturalWidth || el.videoWidth;
+            const h = el.naturalHeight || el.videoHeight;
+            if (w && h) tile.style.setProperty('--ratio', w + '/' + h);
+          };
+          if (item.type === 'video') el.addEventListener('loadedmetadata', apply);
+          else if (el.complete && el.naturalWidth) apply();
+          else el.addEventListener('load', apply);
+        }
 
         if (item.caption) {
           const cap = document.createElement('figcaption');
