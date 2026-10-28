@@ -636,6 +636,7 @@ const projRows = document.querySelectorAll('.proj-row');
 // ---------------------------------------------------------------
 const preview = document.getElementById('imgPreview');
 const previewImg = document.getElementById('previewImg');
+const isPhone = () => window.matchMedia('(max-width: 640px)').matches;
 
 function projectFor(row) {
   return PROJECTS.find(p => p.slug === row.dataset.slug);
@@ -660,13 +661,15 @@ projRows.forEach(row => {
   };
 
   row.addEventListener('mouseenter', (e) => {
+    if (isPhone()) return;
     setSrc();
     preview.classList.add('show');
     position(e.clientX, e.clientY);
   });
-  row.addEventListener('mousemove', (e) => position(e.clientX, e.clientY));
+  row.addEventListener('mousemove', (e) => { if (!isPhone()) position(e.clientX, e.clientY); });
   row.addEventListener('mouseleave', () => preview.classList.remove('show'));
   row.addEventListener('focus', () => {
+    if (isPhone()) return;
     const r = row.getBoundingClientRect();
     setSrc();
     preview.classList.add('show');

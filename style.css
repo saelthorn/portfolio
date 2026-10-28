@@ -5,7 +5,7 @@
     --green:#33ff77;
     --cyan:#4de8ff;
     --yellow:#ffe066;
-    --dim:#8f9bdd;
+    --dim:#a4aee4;
   }
   *{box-sizing:border-box;}
   body{
@@ -247,3 +247,6 @@
   a,button,.proj-row{font-variant-ligatures:none;}
   .leader .fill{contain:layout paint;min-width:0;}
   .proj-row{contain:layout style;}
+
+  /* no hover image preview on phone-sized screens */
+  @media (max-width:640px){.img-preview{display:none;}}
