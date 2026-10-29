@@ -19,7 +19,7 @@ const PROJECTS = [
         body: 'I designed and implemented the game\'s core systems, including: \n\n -Turn-based combat with attacks, critical hits, status effects, saving throws, and special abilities.\n\n -D&D-inspired progression with classes, equipment, abilities, and character development.\n\n -Procedural generation for dungeons and overworld environments.\n\n -Monster AI with pathfinding, detection, ranged attacks, and different behavioral patterns.\n\n -Environmental systems including traps, hazards, lighting, line-of-sight, hunger, resting, and exploration.\n\n -Pixel-art assets created specifically for the project.\n\n The game grew to include 80+ entities, covering player options, monsters, NPCs, and other interactive elements.',
         textSpan: 2,
         textLast: true,        
-        images: [{ src: 'assets/game/mithrim_tileset.png', span: 4, ratio: '0.75', fit: 'cover' }],
+        images: [{ src: 'assets/game/mithrim_tileset.png', span: 4, ratio: 'auto', caption: 'Tileset for Mithrim, including player characters, monsters, and environmental elements.' }],
       },
       {
         title: 'Level Design',
@@ -592,42 +592,45 @@ const projRows = document.querySelectorAll('.proj-row');
 // ---------------------------------------------------------------
 (function () {
   const FORM_ENDPOINT = 'https://formspree.io/f/xdeeerad'; // <- paste yours
-  const form = document.getElementById('mailForm');
-  const btn = document.getElementById('sendBtn');
-  const status = document.getElementById('mailStatus');
-  const emailEl = document.getElementById('visitorEmail');
-  const msgEl = document.getElementById('visitorMsg');
 
-  function say(text, cls) {
-    status.textContent = text;
-    status.className = 'mail-status' + (cls ? ' ' + cls : '');
-  }
+  // Wires up every .mail-form (sidebar + the big one at the end of each project)
+  document.querySelectorAll('.mail-form').forEach((form) => {
+    const btn = form.querySelector('button[type="submit"]');
+    const status = form.querySelector('.mail-status');
+    const emailEl = form.querySelector('input[type="email"]');
+    const msgEl = form.querySelector('textarea');
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = emailEl.value.trim();
-    const message = msgEl.value.trim();
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { say('> invalid email', 'err'); emailEl.focus(); return; }
-    if (message.length < 3) { say('> message is empty', 'err'); msgEl.focus(); return; }
-
-    btn.disabled = true;
-    say('> sending...');
-
-    try {
-      const res = await fetch(FORM_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(form)
-      });
-      if (!res.ok) throw new Error(res.status);
-      form.reset();
-      say('> sent. thanks!', 'ok');
-    } catch (err) {
-      say('> failed. try again?', 'err');
-    } finally {
-      btn.disabled = false;
+    function say(text, cls) {
+      status.textContent = text;
+      status.className = 'mail-status' + (cls ? ' ' + cls : '');
     }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = emailEl.value.trim();
+      const message = msgEl.value.trim();
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { say('> invalid email', 'err'); emailEl.focus(); return; }
+      if (message.length < 3) { say('> message is empty', 'err'); msgEl.focus(); return; }
+
+      btn.disabled = true;
+      say('> sending...');
+
+      try {
+        const res = await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        });
+        if (!res.ok) throw new Error(res.status);
+        form.reset();
+        say('> sent. thanks!', 'ok');
+      } catch (err) {
+        say('> failed. try again?', 'err');
+      } finally {
+        btn.disabled = false;
+      }
+    });
   });
 })();
 
@@ -876,6 +879,9 @@ projRows.forEach(row => {
     modalRole.textContent = p.role;
     modalTools.textContent = p.tools;
     renderExtraSections(p);
+    const mc = modal.querySelector('.modal-contact .mail-status');
+    if (mc) { mc.textContent = ''; mc.className = 'mail-status'; }
+    modal.scrollTop = 0;
     const fallback = placeholderFor(p.name, p.cat);
     modalImg.onerror = () => { modalImg.onerror = null; modalImg.src = fallback; };
     const hr = parseRatio(p.heroRatio);
