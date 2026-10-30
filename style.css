@@ -268,3 +268,59 @@
   .mail-form-big .mail-actions button:hover:not(:disabled),
   .mail-form-big .mail-actions button:focus-visible{color:var(--white);}
   .mail-form-big .mail-status{font-size:0.8rem;}
+
+  /* ===== QBasic-style dialog boxes for case-study text sections =====
+     Title style is picked by a class on <body>:  dlg-a (default) | dlg-b | dlg-c | dlg-d
+     e.g. <body class="dlg-c">  */
+  .tile-text{
+    --dlg-bg:#c0c0c8;--dlg-ink:#0000AA;
+    background:var(--dlg-bg);color:var(--dlg-ink);
+    border:1px solid #000;
+    box-shadow:10px 10px 0 #000044;
+    margin:0 10px 10px 0;
+    padding:0;
+  }
+  .tile-text-inner{padding:20px 24px 22px;}
+  .tile-text p{color:var(--dlg-ink);font-size:0.88rem;}
+  .tile-text a{color:#0000AA;text-decoration:underline;}
+  .tile-text > h3{
+    margin:0;font-family:'JetBrains Mono',monospace;font-size:0.9rem;font-weight:700;
+    color:var(--dlg-ink);letter-spacing:0.5px;
+  }
+
+  /* A: inverse title bar across the top (like a highlighted QBasic menu bar) */
+  .tile-text > h3{
+    background:var(--dlg-ink);color:var(--dlg-bg);
+    padding:5px 24px;text-align:left;
+  }
+
+  /* B: plain heading with a divider line under it (like the line above "Press ESC...") */
+  body.dlg-b .tile-text > h3{
+    background:none;color:var(--dlg-ink);
+    padding:14px 24px 10px;border-bottom:1px solid var(--dlg-ink);
+    text-transform:uppercase;
+  }
+  body.dlg-b .tile-text-inner{padding-top:16px;}
+
+  /* C: title sits ON the top border, left-aligned, in [ brackets ] */
+  body.dlg-c .tile-text > h3{
+    position:absolute;top:0;left:18px;transform:translateY(-52%);
+    background:var(--dlg-bg);padding:0 6px;z-index:1;white-space:nowrap;
+  }
+  body.dlg-c .tile-text > h3::before{content:"[ ";}
+  body.dlg-c .tile-text > h3::after{content:" ]";}
+  body.dlg-c .tile-text-inner{padding-top:26px;}
+
+  /* D: title on the top border, centered, inverse colors (like the "Untitled" window label) */
+  body.dlg-d .tile-text > h3{
+    position:absolute;top:0;left:50%;transform:translate(-50%,-52%);
+    background:var(--dlg-ink);color:var(--dlg-bg);padding:2px 14px;z-index:1;white-space:nowrap;
+  }
+  body.dlg-d .tile-text-inner{padding-top:26px;}
+
+  /* untitled sections */
+  .tile-text:not(.has-title) .tile-text-inner{padding-top:22px;}
+
+  @media (max-width:640px){
+    .tile-text{margin-right:6px;box-shadow:6px 6px 0 #000044;}
+  }

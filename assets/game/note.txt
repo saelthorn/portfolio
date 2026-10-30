@@ -42,3 +42,6 @@
 //                   { src: 'assets/b.png', span: 2, ratio: 'portrait', position: 'top' }
 //                 ]
 // ---------------------------------------------------------------
+
+
+// document.body.className = 'dlg-b'

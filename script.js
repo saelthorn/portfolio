@@ -775,7 +775,8 @@ projRows.forEach(row => {
         if (sec.title) {
           const h = document.createElement('h3');
           h.textContent = sec.title;
-          inner.appendChild(h);
+          textTile.insertBefore(h, inner);   // title sits on the box border (QBasic dialog style)
+          textTile.classList.add('has-title');
         }
         paras.forEach(para => {
           const p = document.createElement('p');
