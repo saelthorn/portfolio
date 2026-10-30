@@ -579,12 +579,115 @@ const projRows = document.querySelectorAll('.proj-row');
     } else {
       clearInterval(timer);
       setTimeout(() => {
-        loader.classList.add('hide');
+        // start the scramble first so real text never flashes, then cut the loader instantly (no fade)
+        if (window.halIntro) window.halIntro();
+        loader.remove();
         document.body.style.overflow = '';
-        setTimeout(() => loader.remove(), 450);
       }, 300);
     }
   }, 180);
+})();
+
+
+// ---------------------------------------------------------------
+// Intro: the screen starts blank, then letters pop up at random
+// spots (flashing random glyphs first) until the full page is formed
+// ---------------------------------------------------------------
+(function () {
+  const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&@!?<>/\\|=+*';
+  const TOTAL = 1240;      // ms until the last letter has started popping
+  const FLASH = 120;       // ms each letter cycles random glyphs before locking
+  const CYCLE = 45;        // ms between glyph changes on one letter
+  const DECOR_AT = 0.6;    // fraction of TOTAL when rules / borders appear
+  const MAX_DOTS = 140;
+  const BLANK = '\u00A0';  // same width as a letter, so layout never jumps
+  const rnd = () => GLYPHS[(Math.random() * GLYPHS.length) | 0];
+
+  window.halIntro = function () {
+    const root = document.querySelector('.page');
+    if (!root) return;
+
+    // dotted leaders are CSS-generated, so swap them for real dots that can pop in like letters
+    const fills = Array.from(root.querySelectorAll('.leader .fill'));
+    root.classList.add('intro-dots');
+    fills.forEach(f => {
+      // measure one dot with a probe span (scrollWidth can't be used: it never reports less than the box width)
+      f.textContent = '';
+      const probe = document.createElement('span');
+      probe.textContent = '.'.repeat(100);
+      f.appendChild(probe);
+      const dotW = probe.getBoundingClientRect().width / 100;
+      const n = dotW > 0 ? Math.ceil(f.clientWidth / dotW) + 2 : 100;
+      f.textContent = '.'.repeat(Math.min(n, MAX_DOTS));
+    });
+
+    const jobs = [];
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    while (w.nextNode()) {
+      const node = w.currentNode;
+      const orig = node.nodeValue;
+      if (!orig.trim()) continue;
+      const par = node.parentElement;
+      if (!par || par.closest('script,style,noscript,textarea')) continue;
+      const chars = Array.from(orig);
+      const pop = chars.map(ch => /\s/.test(ch) ? -1 : Math.random() * TOTAL);
+      const real = pop.filter(p => p >= 0);
+      if (!real.length) continue;
+      jobs.push({
+        node, orig, chars, pop,
+        min: Math.min(...real), max: Math.max(...real) + FLASH,
+        last: null, state: 0, skip: false
+      });
+    }
+    if (!jobs.length) return;
+
+    root.classList.add('intro');
+    const start = performance.now();
+    let decorShown = false;
+
+    const draw = (j, text) => {
+      if (text === j.last) return;
+      j.last = text;
+      j.node.nodeValue = text;
+    };
+
+    const frame = (now) => {
+      const t = now - start;
+      if (!decorShown && t >= TOTAL * DECOR_AT) { root.classList.remove('intro'); decorShown = true; }
+
+      let alive = false;
+      for (let i = 0; i < jobs.length; i++) {
+        const j = jobs[i];
+        if (j.skip || j.state === 2) continue;
+        if (!j.node.isConnected) { j.skip = true; continue; }
+        // something else (e.g. the hours clock) changed this text: leave it alone
+        if (j.last !== null && j.node.nodeValue !== j.last) { j.skip = true; continue; }
+        alive = true;
+
+        if (t >= j.max) { draw(j, j.orig); j.state = 2; continue; }      // fully formed
+        if (t < j.min) { if (j.state === 0) { draw(j, j.chars.map(c => /\s/.test(c) ? c : BLANK).join('')); j.state = 1; } continue; }
+
+        let out = '';
+        for (let k = 0; k < j.chars.length; k++) {
+          const p = j.pop[k];
+          if (p < 0) out += j.chars[k];
+          else if (t < p) out += BLANK;
+          else if (t < p + FLASH) out += rnd();
+          else out += j.chars[k];
+        }
+        draw(j, out);
+      }
+
+      if (alive && t < TOTAL + FLASH + 100) requestAnimationFrame(frame);
+      else {
+        jobs.forEach(j => { if (!j.skip && j.node.isConnected) j.node.nodeValue = j.orig; });
+        fills.forEach(f => { f.textContent = ''; });   // hand the dotted lines back to the CSS version
+        root.classList.remove('intro', 'intro-dots');
+      }
+    };
+    // first frame runs synchronously so real text never flashes before the blank screen
+    frame(start);   // this call schedules the rest of the animation itself
+  };
 })();
 
 // ---------------------------------------------------------------
@@ -1100,6 +1203,8 @@ filterButtons.forEach(btn => {
   }
 
   function glitch(el) {
+    // don't run during the intro pop-in, it would capture half-scrambled text as the "original"
+    if (document.querySelector('.page.intro-dots')) return;
     stop(el);
     const nodes = textNodes(el).map(node => ({ node, orig: node.nodeValue }));
     if (!nodes.length) return;

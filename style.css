@@ -324,3 +324,15 @@
   @media (max-width:640px){
     .tile-text{margin-right:6px;box-shadow:6px 6px 0 #000044;}
   }
+
+
+  /* intro: hide decorations (dotted leaders, rules, underlines) until the letters have mostly popped in */
+  .page.intro .rule-thin{visibility:hidden;}
+  /* dotted leaders pop in as real characters during the intro, then the CSS dots take over */
+  .page.intro-dots .leader .fill::before{content:none;}
+  .page.intro .foot{border-top-color:transparent;}
+  .page.intro .mail-form input,
+  .page.intro .mail-form textarea{border-bottom-color:transparent;}
+  .page.intro .mail-form ::placeholder{color:transparent;}
+  .page.intro .role-list button::before,
+  .page.intro .role-list button::after{visibility:hidden;}
