@@ -19,7 +19,7 @@ const PROJECTS = [
         body: 'I designed and implemented the game\'s core systems, including: \n\n -Turn-based combat with attacks, critical hits, status effects, saving throws, and special abilities.\n\n -D&D-inspired progression with classes, equipment, abilities, and character development.\n\n -Procedural generation for dungeons and overworld environments.\n\n -Monster AI with pathfinding, detection, ranged attacks, and different behavioral patterns.\n\n -Environmental systems including traps, hazards, lighting, line-of-sight, hunger, resting, and exploration.\n\n -Pixel-art assets created specifically for the project.\n\n The game grew to include 80+ entities, covering player options, monsters, NPCs, and other interactive elements.',
         textSpan: 2,
         textLast: true,        
-        images: [{ src: 'assets/game/mithrim_tileset.png', span: 4, ratio: 'auto', caption: 'Tileset for Mithrim, including player characters, monsters, and environmental elements.' }],
+        images: [{ src: 'assets/game/mithrim_tileset.png', span: 4, ratio: 'auto', fit: 'fill', caption: 'Tileset for Mithrim, including player characters, monsters, and environmental elements.' }],
       },
       {
         title: 'Level Design',
@@ -911,6 +911,8 @@ projRows.forEach(row => {
         if (ratio === 'auto') tile.classList.add('ratio-auto');
         else tile.style.setProperty('--ratio', ratio);
         if (item.fit === 'contain') tile.classList.add('fit-contain');
+        if (item.fit === 'fill') tile.classList.add('fit-fill');
+        if (item.fit === 'natural') tile.classList.add('fit-natural');
 
         let el;
         if (item.type === 'video') {
@@ -938,7 +940,7 @@ projRows.forEach(row => {
 
         // size the tile to the media's real proportions once they're known
         // (manual ratio stays as the placeholder; 'auto' and contain tiles are left alone)
-        if (ratio !== 'auto' && item.fit !== 'contain') {
+        if (ratio !== 'auto' && item.fit !== 'contain' && item.fit !== 'fill') {
           const apply = () => {
             const w = el.naturalWidth || el.videoWidth;
             const h = el.naturalHeight || el.videoHeight;
@@ -990,6 +992,8 @@ projRows.forEach(row => {
     modalImg.onerror = () => { modalImg.onerror = null; modalImg.src = fallback; };
     const hr = parseRatio(p.heroRatio);
     modalImgWrap.style.aspectRatio = (hr && hr !== 'auto') ? hr : '';
+    modalImgWrap.classList.toggle('fit-fill', p.heroFit === 'fill');
+    modalImgWrap.classList.toggle('fit-contain', p.heroFit === 'contain');
     modalImg.src = src;
 
     const firstRect = preview.classList.contains('show')
