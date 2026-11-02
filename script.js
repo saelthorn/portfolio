@@ -596,8 +596,8 @@ const projRows = document.querySelectorAll('.proj-row');
 (function () {
   const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&@!?<>/\\|=+*';
   const TOTAL = 1240;      // ms until the last letter has started popping
-  const FLASH = 120;       // ms each letter cycles random glyphs before locking
-  const CYCLE = 45;        // ms between glyph changes on one letter
+  const FLASH = 260;       // ms each letter cycles random glyphs before locking
+  const CYCLE = 90;        // ms a letter holds one glyph before swapping to another
   const DECOR_AT = 0.6;    // fraction of TOTAL when rules / borders appear
   const MAX_DOTS = 140;
   const BLANK = '\u00A0';  // same width as a letter, so layout never jumps
@@ -636,7 +636,8 @@ const projRows = document.querySelectorAll('.proj-row');
       jobs.push({
         node, orig, chars, pop,
         min: Math.min(...real), max: Math.max(...real) + FLASH,
-        last: null, state: 0, skip: false
+        last: null, state: 0, skip: false,
+        glyphs: [], bucket: -1
       });
     }
     if (!jobs.length) return;
@@ -667,12 +668,18 @@ const projRows = document.querySelectorAll('.proj-row');
         if (t >= j.max) { draw(j, j.orig); j.state = 2; continue; }      // fully formed
         if (t < j.min) { if (j.state === 0) { draw(j, j.chars.map(c => /\s/.test(c) ? c : BLANK).join('')); j.state = 1; } continue; }
 
+        // glyphs only re-roll once per CYCLE window instead of every frame
+        const bucket = Math.floor(t / CYCLE);
+        if (bucket !== j.bucket) {
+          j.bucket = bucket;
+          for (let k = 0; k < j.chars.length; k++) j.glyphs[k] = rnd();
+        }
         let out = '';
         for (let k = 0; k < j.chars.length; k++) {
           const p = j.pop[k];
           if (p < 0) out += j.chars[k];
           else if (t < p) out += BLANK;
-          else if (t < p + FLASH) out += rnd();
+          else if (t < p + FLASH) out += j.glyphs[k];
           else out += j.chars[k];
         }
         draw(j, out);
