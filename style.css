@@ -76,7 +76,7 @@
 
   /* sidebar footer */
   .foot{border-top:1px solid var(--dim);padding-top:16px;}
-  .foot-heading{font-size:1.1rem;margin:0 0 8px;color:var(--white);}
+  .foot-heading{font-size:1.1rem;margin:0 0 8px;color:var(--green);}
   .mail-form{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
   .mail-form input[type="email"],.mail-form textarea{
     background:none;border:none;border-bottom:1px solid var(--dim);color:var(--white);
@@ -352,7 +352,11 @@
      =============================================================== */
 
   /* soft phosphor glow on all text */
-  body{text-shadow:0 0 3px rgba(130,170,255,.35);}   /* <-- tweak (or delete line) */
+  /* plus a slight red/cyan color fringe on glyph edges, like a misconverged tube */
+  body{text-shadow:
+    0.7px 0 rgba(255,60,90,.45),    /* <-- tweak fringe offset/strength (or delete these two lines) */
+    -0.7px 0 rgba(60,210,255,.45),
+    0 0 3px rgba(130,170,255,.35);}
 
   /* scanlines */
   body::before{
@@ -381,3 +385,15 @@
   @media (prefers-reduced-motion:reduce){
     body::before{animation:none;}
   }
+
+  /* shutter transition after the boot loader (driven by script.js):
+     top + bottom close to the middle, then open back out from the middle */
+  .crt-shutter{position:fixed;inset:0;z-index:1002;pointer-events:none;overflow:hidden;}
+  .crt-shutter .half{position:absolute;left:0;right:0;height:50%;background:#000;}
+  .crt-shutter .top{top:0;transform:translateY(-100%);}
+  .crt-shutter .bot{bottom:0;transform:translateY(100%);}
+  .crt-shutter .line{            /* thin dim line where the two halves meet */
+    position:absolute;left:0;right:0;top:calc(50% - 1px);height:2px;
+    background:rgba(150,180,255,.45);opacity:0;
+  }
+  @media (prefers-reduced-motion:reduce){.crt-shutter{display:none;}}

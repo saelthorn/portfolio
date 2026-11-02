@@ -3,14 +3,14 @@ const PROJECTS = [
     slug: 'mithrim', name: 'MITHRIM', cat: 'game', catLabel: 'GAME DEV', status: 'in-dev',
     summary: 'DnD 5e-inspired roguelike, solo-built in Python/Pygame',
     role: 'Game Developer,\n\n Gameplay Programmer, \n\n Assets Designer, \n\n UX/UI Designer', tools: 'Python, Pygame, Figma',
-    image: 'assets/game/mith.png',
+    image: 'assets/game/mithrim/mith.png',
     sections: [
       {
         title: 'Overview',
         body: 'I designed and implemented the game\'s core systems, including: \n\n -Turn-based combat with attacks, critical hits, status effects, saving throws, and special abilities.\n\n -D&D-inspired progression with classes, equipment, abilities, and character development.\n\n -Procedural generation for dungeons and overworld environments.\n\n -Monster AI with pathfinding, detection, ranged attacks, and different behavioral patterns.\n\n -Environmental systems including traps, hazards, lighting, line-of-sight, hunger, resting, and exploration.\n\n -Pixel-art assets created specifically for the project.\n\n The game grew to include 80+ entities, covering player options, monsters, NPCs, and other interactive elements.'
       },
       {
-        video: 'assets/game/mithrim_gameplay.mp4',
+        video: 'assets/game/mithrim/mithrim_gameplay.mp4',
         title: 'The Challenge',
         body: 'A solo-developed roguelike drawing on DnD 5e mechanics, built from the ground up in Python and Pygame. Covers a substantial codebase of entities, combat, and systems.'
       },
@@ -19,11 +19,11 @@ const PROJECTS = [
         body: 'I designed and implemented the game\'s core systems, including: \n\n -Turn-based combat with attacks, critical hits, status effects, saving throws, and special abilities.\n\n -D&D-inspired progression with classes, equipment, abilities, and character development.\n\n -Procedural generation for dungeons and overworld environments.\n\n -Monster AI with pathfinding, detection, ranged attacks, and different behavioral patterns.\n\n -Environmental systems including traps, hazards, lighting, line-of-sight, hunger, resting, and exploration.\n\n -Pixel-art assets created specifically for the project.\n\n The game grew to include 80+ entities, covering player options, monsters, NPCs, and other interactive elements.',
         textSpan: 2,
         textLast: true,        
-        images: [{ src: 'assets/game/mithrim_tileset.png', span: 4, ratio: 'auto', fit: 'fill', caption: 'Tileset for Mithrim, including player characters, monsters, and environmental elements.' }],
+        images: [{ src: 'assets/game/mithrim/mithrim_tileset.png', span: 4, ratio: 'auto', fit: 'fill', caption: 'Tileset for Mithrim, including player characters, monsters, and environmental elements.' }],
       },
       {
         title: 'Level Design',
-        image: 'assets/game/mithrim_screenshot1.png', caption: 'Combat Encounter in Mithrim, showing a player character and his companions being ambushed by Giant Spiders.',
+        image: 'assets/game/mithrim/mithrim_screenshot1.png', caption: 'Combat Encounter in Mithrim, showing a player character and his companions being ambushed by Giant Spiders.',
         body: 'A major focus of Mithrim became the relationship between environment and gameplay. \n\n Rather than treating levels as simple spaces for combat, environments were designed to create tactical situations through: \n\n Terrain → Positioning → Visibility → Enemy Behavior → Player Decisions \n\n Narrow corridors, open rooms, environmental hazards, lighting, enemy placement, and points of interest all influence how encounters unfold.'
       },
       {
@@ -37,14 +37,14 @@ const PROJECTS = [
     summary: 'A Filipino secondhand fashion marketplace built around discovery and affordability.',
     role: 'UX/UI Designer',
     tools: 'Figma',
-    image: 'assets/uxui/ukayed.png',
+    image: 'assets/uxui/ukayed/ukayed.png',
     sections: [
       {
         title: 'Overview',
         body: 'A secondhand clothing marketplace concept inspired by Filipino ukay-ukay culture. The platform connects buyers and sellers through curated collections, accessible pricing, and a shopping experience built around discovering unique pre-loved fashion.'
       },
       {
-        videos: [{ src: 'assets/uxui/ukayed_demo.mp4', span: 3, ratio: 'auto', fit: 'default' }],
+        videos: [{ src: 'assets/uxui/ukayed/ukayed_demo.mp4', span: 3, ratio: 'auto', fit: 'default' }],
         textSpan: 3,
         title: 'The Challenge',
         body: 'Create a digital shopping experience that brings the excitement of ukay-ukay online, allowing users to discover unique secondhand fashion through intuitive browsing and curated finds.\n\nMake secondhand shopping easier and more convenient with clear product details, transparent pricing, and a seamless purchasing process while preserving the thrill of finding hidden gems.'
@@ -53,8 +53,8 @@ const PROJECTS = [
         title: 'Design Approach',
         body: 'I explored a marketplace experience centered on curated collections, product discovery, and accessible pricing. The concept also incorporates a gradual price-reduction model, allowing listed items to decrease in price over time until reaching a seller-defined minimum.',
         images: [
-          { src: 'assets/uxui/ukayed_marketplace.png', span: 3, ratio: 'auto', caption: '...', },
-          { src: 'assets/uxui/ukayed_picks.png', span: 3, ratio: 'auto', caption: '...' },
+          { src: 'assets/uxui/ukayed/ukayed_marketplace.png', span: 3, ratio: 'auto', caption: '...', },
+          { src: 'assets/uxui/ukayed/ukayed_picks.png', span: 3, ratio: 'auto', caption: '...' },
         ]      
       },
       {
@@ -558,6 +558,41 @@ PROJECTS.forEach(p => {
 const projRows = document.querySelectorAll('.proj-row');
 
 // ---------------------------------------------------------------
+// CRT shutter transition (shared): top + bottom ease in to the middle,
+// swap() runs while the screen is fully closed, then it opens back out
+// from the middle. Returns a Promise that resolves when it's done.
+// ---------------------------------------------------------------
+window.halShutter = function (swap, opts) {
+  const o = Object.assign({ close: 380, hold: 140, open: 520 }, opts || {});   // ms  <-- tweak
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { swap(); return Promise.resolve(); }
+
+  const shutter = document.createElement('div');
+  shutter.className = 'crt-shutter';
+  shutter.style.pointerEvents = 'auto';   // block stray clicks while it plays
+  shutter.innerHTML = '<div class="half top"></div><div class="half bot"></div><div class="line"></div>';
+  document.body.appendChild(shutter);
+  const top = shutter.querySelector('.top');
+  const bot = shutter.querySelector('.bot');
+  const line = shutter.querySelector('.line');
+  const fin = { fill: 'forwards' };
+  const closeEase = 'cubic-bezier(.55,0,.9,.5)';   // ease-in: slow start, fast finish
+  const openEase = 'cubic-bezier(.1,.6,.3,1)';     // ease-out: quick start, soft landing
+
+  const a = top.animate([{ transform: 'translateY(-100%)' }, { transform: 'translateY(0)' }], { duration: o.close, easing: closeEase, ...fin });
+  bot.animate([{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], { duration: o.close, easing: closeEase, ...fin });
+
+  return a.finished.then(() => {
+    swap();
+    line.animate([{ opacity: 0 }, { opacity: 1, offset: 0.3 }, { opacity: 0 }], { duration: o.hold + o.open * 0.5, ...fin });
+    return new Promise(resolve => setTimeout(resolve, o.hold));
+  }).then(() => {
+    top.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-100%)' }], { duration: o.open, easing: openEase, ...fin });
+    const b = bot.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(100%)' }], { duration: o.open, easing: openEase, ...fin });
+    return b.finished;
+  }).then(() => shutter.remove());
+};
+
+// ---------------------------------------------------------------
 // Boot loader
 // ---------------------------------------------------------------
 (function () {
@@ -579,10 +614,12 @@ const projRows = document.querySelectorAll('.proj-row');
     } else {
       clearInterval(timer);
       setTimeout(() => {
-        // start the scramble first so real text never flashes, then cut the loader instantly (no fade)
-        if (window.halIntro) window.halIntro();
-        loader.remove();
-        document.body.style.overflow = '';
+        // shutter closes over the loader, swap happens out of sight (scramble first so real text never flashes)
+        window.halShutter(() => {
+          if (window.halIntro) window.halIntro();
+          loader.remove();
+          document.body.style.overflow = '';
+        });
       }, 300);
     }
   }, 180);
@@ -1033,9 +1070,36 @@ projRows.forEach(row => {
     modalClose.focus();
   }
 
+  // shutter timings for opening/closing a project  <-- tweak
+  const SHUTTER = { close: 300, hold: 100, open: 420 };
+  let shutterBusy = false;   // stops opens/closes from stacking while the shutter plays
+
+  function openModalWithShutter(row) {
+    if (shutterBusy) return;
+    shutterBusy = true;
+    window.halShutter(() => {
+      // swap while the screen is covered: show instantly, skip the thumbnail-expand + fade
+      modal.style.transition = 'none';
+      openModal(row, false);
+      void modal.offsetWidth;
+      modal.style.transition = '';
+    }, SHUTTER).then(() => { shutterBusy = false; });
+  }
+
   function closeModal() {
+    if (shutterBusy) return;
+    shutterBusy = true;
+    window.halShutter(doCloseModal, SHUTTER)
+      .then(() => { shutterBusy = false; });
+  }
+
+  function doCloseModal() {
     if (typeof closeLightbox === 'function') closeLightbox();
+    // hide instantly (the shutter is covering the screen, so skip the fade)
+    modal.style.transition = 'none';
     modal.classList.remove('open');
+    void modal.offsetWidth;
+    modal.style.transition = '';
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     modalExtra.querySelectorAll('video').forEach(v => v.pause());
@@ -1046,9 +1110,9 @@ projRows.forEach(row => {
   }
 
   projRows.forEach(row => {
-    row.addEventListener('click', () => openModal(row, true));
+    row.addEventListener('click', () => openModalWithShutter(row));
     row.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(row, true); }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModalWithShutter(row); }
     });
   });
 
