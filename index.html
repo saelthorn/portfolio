@@ -21,7 +21,7 @@
     <div class="loader-line">Loading Level Design module... <span class="ok">OK</span></div>
     <div class="loader-line">Loading Game Dev module... <span class="ok">OK</span></div>
     <div class="loader-line">Loading Graphic Design module... <span class="ok">OK</span></div>
-    <div class="loader-line">Mounting PROJECTS.DIR (17 items)... <span class="ok">OK</span></div>
+    <div class="loader-line">Mounting PROJECTS.DIR (18 items)... <span class="ok">OK</span></div>
     <div class="loader-line">Starting Hal'th<span class="loader-cursor blink">_</span></div>
     <div class="loader-bar-wrap">
       <div class="loader-bar"><div class="loader-bar-fill" id="loaderFill"></div></div>
@@ -98,6 +98,15 @@
       <button class="modal-close" id="modalClose">[ ESC ] CLOSE</button>
     </div>
     <div class="modal-image-wrap" id="modalImgWrap"><img id="modalImg" alt=""></div>
+    <div class="modal-game" id="modalGame" hidden>
+      <canvas id="pongCanvas" tabindex="0" aria-label="Playable Pong game. Move your paddle with W and S, the arrow keys, or by dragging. Press space to start or pause."></canvas>
+      <div class="game-hud">
+        <span><b>[ W/S ]</b> <b>[ &uarr;/&darr; ]</b> or DRAG: MOVE</span>
+        <span><b>[ SPACE ]</b> START / PAUSE</span>
+        <span><b>[ R ]</b> RESTART</span>
+        <button type="button" tabindex="-1" data-pong-sound>[ M ] SOUND: OFF</button>
+      </div>
+    </div>
     <h2 class="display modal-title" id="modalTitle"></h2>
     <p class="modal-summary" id="modalSummary"></p>
 
@@ -129,5 +138,6 @@
 </div>
 
 <script src="script.js" defer></script>
+<script src="assets/game/pong/pong.js" defer></script>
 </body>
 </html>

@@ -37,7 +37,7 @@
     .sidebar .logo,.sidebar .tagline,.sidebar .about,.sidebar #roles{margin-left:32px;margin-right:32px;}
     .sidebar .logo{margin-top:40px;}
     .sidebar-spacer{display:none;}
-    .content{order:1;border-top:1px solid var(--green);padding:32px 40px 40px;}
+    .content{order:1;border-top:0px solid var(--green);padding:32px 40px 40px;}
     .foot{order:2;margin:0 40px 28px;}
   }
 
@@ -72,11 +72,11 @@
   .role-list button::after{content:" ]";color:var(--dim);}
   .role-list button.active,.role-list button:hover,.role-list button:focus-visible{color:var(--cyan);}
 
-  .sidebar-spacer{flex:1;}
+  .sidebar-spacer{flex:2;}
 
   /* sidebar footer */
   .foot{border-top:1px solid var(--dim);padding-top:16px;}
-  .foot-heading{font-size:1.1rem;margin:0 0 8px;color:var(--green);}
+  .foot-heading{font-size:1.3rem;margin:0 0 8px;color:var(--green);}
   .mail-form{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
   .mail-form input[type="email"],.mail-form textarea{
     background:none;border:none;border-bottom:1px solid var(--dim);color:var(--white);
@@ -92,7 +92,7 @@
   .mail-status{font-size:0.66rem;color:var(--dim);}
   .mail-status.ok{color:var(--green);}
   .mail-status.err{color:var(--red);}
-  .foot-blurb{font-size:0.68rem;color:var(--dim);margin:0 0 6px;max-width:26ch;}
+  .foot-blurb{font-size:0.68rem;color:var(--dim);margin:0 0 6px;max-width:60ch;}
   .foot-links{display:flex;flex-wrap:wrap;gap:8px;font-size:0.66rem;margin-bottom:16px;}
   .foot-links a{color:var(--dim);}
   .foot-links a:hover,.foot-links a:focus-visible{color:var(--green);}
@@ -397,3 +397,15 @@
     background:rgba(150,180,255,.45);opacity:0;
   }
   @media (prefers-reduced-motion:reduce){.crt-shutter{display:none;}}
+
+  /* playable game (PONG project) */
+  .modal-game{margin-bottom:24px;}
+  .modal-game[hidden]{display:none;}
+  .modal-game canvas{
+    display:block;width:100%;aspect-ratio:16/9;border:1px solid var(--dim);background:var(--bg);
+    cursor:crosshair;touch-action:none;-webkit-user-select:none;user-select:none;
+  }
+  .game-hud{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 22px;margin-top:10px;font-size:0.68rem;color:var(--dim);}
+  .game-hud b{color:var(--green);font-weight:700;}
+  .game-hud button{background:none;border:none;padding:0;font:inherit;color:var(--dim);cursor:pointer;margin-left:auto;}
+  .game-hud button:hover,.game-hud button:focus-visible{color:var(--green);}

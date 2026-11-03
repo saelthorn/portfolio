@@ -33,6 +33,23 @@ const PROJECTS = [
     ]
   },
   {
+    slug: 'pong', name: 'PONG.JS', cat: 'game', catLabel: 'GAME DEV', status: 'ready',
+    playable: true,
+    summary: 'A playable Pong clone built with JavaScript and HTML Canvas. Click to play, first to 7 beats the CPU.',
+    role: 'Game Developer', tools: 'JavaScript, HTML Canvas',
+    image: 'assets/game/pong/pong.png',
+    sections: [
+      {
+        title: 'How to play',
+        body: 'Move your paddle with W / S or the arrow keys, or drag with the mouse or your finger. Press Space to start and pause, R to restart, and M to toggle sound.\n\nFirst to 7 points wins. Hit the ball with the edge of your paddle to send it off at a steeper angle. The ball also speeds up with every return.'
+      },
+      {
+        title: 'Under the hood',
+        body: 'Built from scratch in vanilla JavaScript with the Canvas API, no libraries. The ball moves in small fixed sub-steps so it never tunnels through a paddle at high speed, bounce angles depend on where the ball meets the paddle, and the CPU is deliberately speed-limited with a little random aim error so it can be beaten.'
+      }
+    ]
+  },
+  {
     slug: 'ukayed', name: 'UKAYED', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
     summary: 'A Filipino secondhand fashion marketplace built around discovery and affordability.',
     role: 'UX/UI Designer',
@@ -835,6 +852,7 @@ projRows.forEach(row => {
   const modal = document.getElementById('projectModal');
   const modalImgWrap = document.getElementById('modalImgWrap');
   const modalImg = document.getElementById('modalImg');
+  const modalGame = document.getElementById('modalGame');
   const modalTitle = document.getElementById('modalTitle');
   const modalSummary = document.getElementById('modalSummary');
   const modalCat = document.getElementById('modalCat');
@@ -1040,6 +1058,13 @@ projRows.forEach(row => {
     modalImgWrap.classList.toggle('fit-contain', p.heroFit === 'contain');
     modalImg.src = src;
 
+    // playable projects swap the hero image for the live game
+    const isGame = !!p.playable && !!window.halPong;
+    modalImgWrap.hidden = isGame;
+    modalGame.hidden = !isGame;
+    if (isGame) window.halPong.open(modalGame);
+    else if (window.halPong) window.halPong.close();
+
     const firstRect = preview.classList.contains('show')
       ? preview.getBoundingClientRect()
       : row.getBoundingClientRect();
@@ -1049,7 +1074,7 @@ projRows.forEach(row => {
     document.body.style.overflow = 'hidden';
     preview.classList.remove('show');
 
-    if (animate !== false) {
+    if (animate !== false && !isGame) {
       requestAnimationFrame(() => {
         const lastRect = modalImgWrap.getBoundingClientRect();
         const dx = firstRect.left - lastRect.left;
@@ -1067,7 +1092,8 @@ projRows.forEach(row => {
     }
 
     history.replaceState(null, '', '#project=' + p.slug);
-    modalClose.focus();
+    if (isGame) window.halPong.focus();
+    else modalClose.focus();
   }
 
   // shutter timings for opening/closing a project  <-- tweak
@@ -1103,6 +1129,7 @@ projRows.forEach(row => {
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     modalExtra.querySelectorAll('video').forEach(v => v.pause());
+    if (window.halPong) window.halPong.close();
     if (location.hash.startsWith('#project=')) {
       history.replaceState(null, '', location.pathname + location.search);
     }
