@@ -72,11 +72,11 @@
   .role-list button::after{content:" ]";color:var(--dim);}
   .role-list button.active,.role-list button:hover,.role-list button:focus-visible{color:var(--cyan);}
 
-  .sidebar-spacer{flex:2;}
+  .sidebar-spacer{flex:1;}
 
   /* sidebar footer */
   .foot{border-top:1px solid var(--dim);padding-top:16px;}
-  .foot-heading{font-size:1.3rem;margin:0 0 8px;color:var(--green);}
+  .foot-heading{font-size:1.1rem;margin:0 0 8px;color:var(--green);}
   .mail-form{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
   .mail-form input[type="email"],.mail-form textarea{
     background:none;border:none;border-bottom:1px solid var(--dim);color:var(--white);
@@ -92,7 +92,7 @@
   .mail-status{font-size:0.66rem;color:var(--dim);}
   .mail-status.ok{color:var(--green);}
   .mail-status.err{color:var(--red);}
-  .foot-blurb{font-size:0.68rem;color:var(--dim);margin:0 0 6px;max-width:60ch;}
+  .foot-blurb{font-size:0.68rem;color:var(--dim);margin:0 0 6px;max-width:26ch;}
   .foot-links{display:flex;flex-wrap:wrap;gap:8px;font-size:0.66rem;margin-bottom:16px;}
   .foot-links a{color:var(--dim);}
   .foot-links a:hover,.foot-links a:focus-visible{color:var(--green);}
@@ -409,3 +409,18 @@
   .game-hud b{color:var(--green);font-weight:700;}
   .game-hud button{background:none;border:none;padding:0;font:inherit;color:var(--dim);cursor:pointer;margin-left:auto;}
   .game-hud button:hover,.game-hud button:focus-visible{color:var(--green);}
+
+  /* PONG: full-screen landscape layer on touch devices */
+  .modal-game.landscape{
+    position:fixed;z-index:400;margin:0;background:var(--bg);
+    display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;
+  }
+  .modal-game.landscape canvas{border:none;aspect-ratio:auto;}
+  .modal-game.landscape .game-hud{position:absolute;top:10px;left:14px;margin:0;gap:0;}
+  .modal-game.landscape .game-hud span{display:none;}
+  .modal-game.landscape .game-hud button{margin-left:0;}
+  .game-exit{
+    position:absolute;top:10px;right:14px;background:none;border:none;padding:0;
+    font:inherit;font-size:0.68rem;color:var(--dim);cursor:pointer;
+  }
+  .game-exit:hover,.game-exit:focus-visible{color:var(--green);}

@@ -35,6 +35,12 @@
   let pointerY = null;
   let muted = true, actx = null;
 
+  // landscape (touch devices): the game moves to a full-screen layer and, if the
+  // phone is held in portrait, is rotated 90deg so it always plays landscape.
+  let holder = null, home = null, exitBtn = null;
+  let landscapeMode = false, rotated = false, fsTried = false;
+  const isTouch = () => !!(window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches);
+
   // ---------------------------------------------------------------
   // Sound (off by default, toggle with M)
   // ---------------------------------------------------------------
@@ -300,23 +306,101 @@
   function onVisibility() { if (document.hidden) pause(); }
 
   function pointerToY(e) {
+    if (landscapeMode && rotated) {
+      // container is rotated 90deg clockwise with its origin at screen (innerWidth, 0)
+      const ly = window.innerWidth - e.clientX;
+      return (ly - canvas.offsetTop) * (H / canvas.offsetHeight);
+    }
     const r = canvas.getBoundingClientRect();
     return (e.clientY - r.top) * (H / r.height);
   }
   function bindCanvas() {
-    canvas.addEventListener('pointerdown', (e) => {
+    holder.addEventListener('pointerdown', (e) => {
+      if (e.target.closest && e.target.closest('button')) return;
+      if (!landscapeMode && e.target !== canvas) return;
+      tryFullscreen();
       canvas.focus({ preventScroll: true });
       pointerY = pointerToY(e);
       if (e.pointerType !== 'mouse') { try { canvas.setPointerCapture(e.pointerId); } catch (_) {} }
       if (state === 'menu' || state === 'over') resetMatch();
       else if (state === 'paused') resume();
     });
-    canvas.addEventListener('pointermove', (e) => { pointerY = pointerToY(e); });
+    holder.addEventListener('pointermove', (e) => {
+      if (e.target.closest && e.target.closest('button')) return;
+      if (!landscapeMode && e.target !== canvas) return;
+      pointerY = pointerToY(e);
+    });
     canvas.addEventListener('blur', () => { keys.up = keys.down = false; pause(); });
     if (sndBtn) {
       sndBtn.addEventListener('mousedown', (e) => e.preventDefault());   // keep focus on the game
       sndBtn.addEventListener('click', () => setMuted(!muted));
     }
+  }
+
+  // ---------------------------------------------------------------
+  // Landscape layout (touch devices)
+  // ---------------------------------------------------------------
+  function layout() {
+    if (!landscapeMode || !holder) return;
+    const vw = window.innerWidth, vh = window.innerHeight;
+    rotated = vh > vw;                       // portrait phone -> rotate the game
+    const cw = rotated ? vh : vw, ch = rotated ? vw : vh;
+    const st = holder.style;
+    st.width = cw + 'px'; st.height = ch + 'px'; st.top = '0';
+    if (rotated) { st.left = vw + 'px'; st.transformOrigin = '0 0'; st.transform = 'rotate(90deg)'; }
+    else { st.left = '0'; st.transform = 'none'; }
+    const w = Math.min(cw, ch * W / H);
+    canvas.style.width = w + 'px';
+    canvas.style.height = (w * H / W) + 'px';
+  }
+  function onWinResize() { layout(); resize(); }
+
+  function enterLandscape() {
+    home = { parent: holder.parentNode, next: holder.nextSibling };
+    document.body.appendChild(holder);       // escape any transformed ancestors
+    holder.classList.add('landscape');
+    exitBtn = document.createElement('button');
+    exitBtn.type = 'button';
+    exitBtn.className = 'game-exit';
+    exitBtn.textContent = '[ X ] EXIT';
+    exitBtn.addEventListener('click', () => {
+      const mc = document.getElementById('modalClose');
+      if (mc) mc.click();
+    });
+    holder.appendChild(exitBtn);
+    landscapeMode = true;
+    layout();
+  }
+  function leaveLandscape() {
+    if (!landscapeMode) return;
+    landscapeMode = false; rotated = false;
+    if (exitBtn) { exitBtn.remove(); exitBtn = null; }
+    holder.classList.remove('landscape');
+    holder.removeAttribute('style');
+    canvas.removeAttribute('style');
+    if (home && home.parent) home.parent.insertBefore(holder, home.next);
+    home = null;
+    try {
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      }
+      if (window.screen && screen.orientation && screen.orientation.unlock) screen.orientation.unlock();
+    } catch (_) {}
+  }
+  // First tap: ask for real fullscreen + landscape lock (Android Chrome etc.).
+  // iOS Safari refuses, which is fine: the CSS rotation above still works.
+  function tryFullscreen() {
+    if (!landscapeMode || fsTried) return;
+    fsTried = true;
+    try {
+      const el = document.documentElement;
+      const req = el.requestFullscreen || el.webkitRequestFullscreen;
+      if (!req) return;
+      const p = req.call(el);
+      Promise.resolve(p)
+        .then(() => (screen.orientation && screen.orientation.lock) ? screen.orientation.lock('landscape') : null)
+        .catch(() => {});
+    } catch (_) {}
   }
 
   // ---------------------------------------------------------------
@@ -328,8 +412,10 @@
     document.removeEventListener('keydown', onKeyDown);
     document.removeEventListener('keyup', onKeyUp);
     document.removeEventListener('visibilitychange', onVisibility);
-    window.removeEventListener('resize', resize);
+    window.removeEventListener('resize', onWinResize);
+    window.removeEventListener('orientationchange', onWinResize);
     if (ro) { ro.disconnect(); ro = null; }
+    leaveLandscape();
     keys.up = keys.down = false;
     pointerY = null;
   }
@@ -339,8 +425,11 @@
     canvas = container.querySelector('canvas');
     if (!canvas) return;
     ctx = canvas.getContext('2d');
+    holder = container;
     sndBtn = container.querySelector('[data-pong-sound]');
     if (!bound) { bindCanvas(); bound = true; }
+    fsTried = false;
+    if (isTouch()) enterLandscape();
 
     readColors();
     if (document.fonts && document.fonts.load) {
@@ -351,7 +440,8 @@
     document.addEventListener('keyup', onKeyUp);
     document.addEventListener('visibilitychange', onVisibility);
     if (window.ResizeObserver) { ro = new ResizeObserver(resize); ro.observe(canvas); }
-    else window.addEventListener('resize', resize);
+    window.addEventListener('resize', onWinResize);
+    window.addEventListener('orientationchange', onWinResize);
 
     resize();
     renderSndLabel();
