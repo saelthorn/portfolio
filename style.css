@@ -424,3 +424,9 @@
     font:inherit;font-size:0.68rem;color:var(--dim);cursor:pointer;
   }
   .game-exit:hover,.game-exit:focus-visible{color:var(--green);}
+
+img {
+  -webkit-touch-callout: none; /* iOS long-press menu */
+  user-select: none;
+  -webkit-user-drag: none;
+}

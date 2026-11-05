@@ -34,7 +34,7 @@
 //                                    'portrait' 3:4 | 'tall' 9:16 |
 //                                    'auto' (natural size) | or any
 //                                    '5/4', '2:1', 1.5 style value
-//                 item.fit         – 'cover' (default, crops) | 'contain'
+//                 item.fit         – 'cover' (default, crops) | 'contain' | 'fill' (stretches)
 //                 item.position    – crop focus, e.g. 'top', '50% 20%'
 //               Example:
 //                 images: [

@@ -7,24 +7,43 @@ const PROJECTS = [
     sections: [
       {
         title: 'Overview',
-        body: 'I designed and implemented the game\'s core systems, including: \n\n -Turn-based combat with attacks, critical hits, status effects, saving throws, and special abilities.\n\n -D&D-inspired progression with classes, equipment, abilities, and character development.\n\n -Procedural generation for dungeons and overworld environments.\n\n -Monster AI with pathfinding, detection, ranged attacks, and different behavioral patterns.\n\n -Environmental systems including traps, hazards, lighting, line-of-sight, hunger, resting, and exploration.\n\n -Pixel-art assets created specifically for the project.\n\n The game grew to include 80+ entities, covering player options, monsters, NPCs, and other interactive elements.'
+        body: 'Mithrim is a turn-based fantasy roguelike inspired by classic dungeon crawlers and Dungeons & Dragons 5th Edition. Developed in Python using Pygame, it features procedural dungeon generation, tactical combat, character progression, and a variety of monsters and NPCs. The project explores gameplay programming, systems design, and procedural generation through a custom-built RPG experience.'
       },
       {
         video: 'assets/game/mithrim/mithrim_gameplay.mp4',
         title: 'The Challenge',
-        body: 'A solo-developed roguelike drawing on DnD 5e mechanics, built from the ground up in Python and Pygame. Covers a substantial codebase of entities, combat, and systems.'
+        body: 'Create a roguelike game that captures the feel of Dungeons & Dragons while remaining approachable for players unfamiliar with the tabletop ruleset. The project explores how to design and implement interconnected systems that support exploration, combat, and character progression.'
       },
       {
         title: 'Design & Development',
-        body: 'I designed and implemented the game\'s core systems, including: \n\n -Turn-based combat with attacks, critical hits, status effects, saving throws, and special abilities.\n\n -D&D-inspired progression with classes, equipment, abilities, and character development.\n\n -Procedural generation for dungeons and overworld environments.\n\n -Monster AI with pathfinding, detection, ranged attacks, and different behavioral patterns.\n\n -Environmental systems including traps, hazards, lighting, line-of-sight, hunger, resting, and exploration.\n\n -Pixel-art assets created specifically for the project.\n\n The game grew to include 80+ entities, covering player options, monsters, NPCs, and other interactive elements.',
+        body: 'Mithrim is built around a simple loop: explore, encounter, adapt, and progress. \n\n I designed each system to support that loop, giving players meaningful decisions both inside and outside of combat.\n\n The project also explores how to create a cohesive experience through interconnected systems, including: \n\n -Combat mechanics that reward tactical positioning and resource management.\n\n -Procedural generation that creates varied environments while maintaining a sense of place.\n\n -Environmental design that encourages exploration and discovery.',
         textSpan: 2,
         textLast: true,        
         images: [{ src: 'assets/game/mithrim/mithrim_tileset.png', span: 4, ratio: 'auto', fit: 'fill', caption: 'Tileset for Mithrim, including player characters, monsters, and environmental elements.' }],
       },
       {
         title: 'Level Design',
-        image: 'assets/game/mithrim/mithrim_screenshot1.png', caption: 'Combat Encounter in Mithrim, showing a player character and his companions being ambushed by Giant Spiders.',
-        body: 'A major focus of Mithrim became the relationship between environment and gameplay. \n\n Rather than treating levels as simple spaces for combat, environments were designed to create tactical situations through: \n\n Terrain → Positioning → Visibility → Enemy Behavior → Player Decisions \n\n Narrow corridors, open rooms, environmental hazards, lighting, enemy placement, and points of interest all influence how encounters unfold.'
+        body: 'A major focus of Mithrim became the relationship between environment and gameplay. \n\n Rather than treating levels as simple spaces for combat, environments were designed to create tactical situations through: \n\n Terrain → Positioning → Visibility → Enemy Behavior → Player Decisions \n\n Narrow corridors, open rooms, environmental hazards, lighting, enemy placement, and points of interest all influence how encounters unfold.',
+        textSpan: 2,
+        images: [
+          { src: 'assets/game/mithrim/level_design.png', span: 4, ratio: 'auto', fit: 'fill', caption: 'Zoomed-out view of a procedurally generated overworld map, showing the tavern and surrounding areas.' }
+        ],
+      },
+      {
+        title: 'Turn-Based Tactical Combat',
+        body: 'Combat is designed to reward tactical positioning, resource management, and decision-making. Players must consider their character’s abilities, the environment, and enemy behavior to succeed in encounters. \n\n The turn-based system allows for thoughtful planning and strategic execution, emphasizing the importance of each action taken during combat.',
+        images: [
+          { src: 'assets/game/mithrim/giant_spider_encounter.png', span: 3, ratio: '4:6', fit: 'fill', caption: 'A Wizard and its companion ambushed by giant spiders in the overworld.' },
+          { src: 'assets/game/mithrim/troll_encounter.png', span: 3, ratio: '4:6', fit: 'fill', caption: 'A Troll ambushing a party of dragonborn adventurers in the overworld.' },
+        ],
+      },
+      {
+        title: 'Character Progression & Equipment',
+        body: 'As players progress through the game, they can enhance their characters with new abilities, skills, and equipment. This system encourages experimentation and provides meaningful choices that impact gameplay. \n\n Equipment can be found, crafted, or obtained through exploration and combat, each with unique properties and effects.',
+        textSpan: 2,
+        images: [
+          { src: 'assets/game/mithrim/classes_races.png', span: 4, ratio: 'auto', fit: 'fill', caption: 'List of playable classes and races.' },
+        ],
       },
       {
         title: 'Result',
@@ -1203,6 +1222,25 @@ projRows.forEach(row => {
     if (match) openModal(match, false);
   }
 })();
+
+const PROTECTED_IMAGES = [
+  'assets/game/mithrim/classes_races.png',
+  // add more paths here
+];
+
+const isProtected = (el) =>
+  el && el.tagName === 'IMG' &&
+  PROTECTED_IMAGES.some(p => (el.getAttribute('src') || '').includes(p));
+
+// Block right-click menu
+document.addEventListener('contextmenu', (e) => {
+  if (isProtected(e.target)) e.preventDefault();
+});
+
+// Block drag-to-desktop
+document.addEventListener('dragstart', (e) => {
+  if (isProtected(e.target)) e.preventDefault();
+});
 
 // ---------------------------------------------------------------
 // Category filters
