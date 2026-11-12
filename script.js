@@ -1403,3 +1403,34 @@ filterButtons.forEach(btn => {
   document.addEventListener('click', (e) => { if (!menu.contains(e.target)) close(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 })();
+
+// ---------------------------------------------------------------
+// Mobile browser bars: keep full-screen layers (CRT bezel, scanlines,
+// modal, loader) matched to the exact visible area as the URL bar and
+// the bottom toolbar slide in and out. CSS reads --vvh / --vvt.
+// ---------------------------------------------------------------
+(function () {
+  const vv = window.visualViewport;
+  if (!vv) return;
+  const root = document.documentElement;
+  let raf = 0;
+
+  function apply() {
+    raf = 0;
+    if (vv.scale > 1.01) {   // pinch-zoomed: fall back to plain dvh
+      root.style.removeProperty('--vvh');
+      root.style.removeProperty('--vvt');
+      return;
+    }
+    root.style.setProperty('--vvh', vv.height + 'px');
+    root.style.setProperty('--vvt', vv.offsetTop + 'px');
+  }
+  const schedule = () => { if (!raf) raf = requestAnimationFrame(apply); };
+
+  vv.addEventListener('resize', schedule);
+  vv.addEventListener('scroll', schedule);
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  window.addEventListener('orientationchange', schedule);
+  apply();
+})();
