@@ -59,7 +59,7 @@
     <div class="sidebar-spacer"></div>
 
     <div class="foot" id="contact">
-      <h2 class="foot-heading display">Get in touch</h3>
+      <h2 class="foot-heading display">Get in touch</h2>
       <form class="mail-form" id="mailForm" novalidate>
         <input type="email" id="visitorEmail" name="email" placeholder="Your email" autocomplete="email" required>
         <textarea id="visitorMsg" name="message" placeholder="Your message" rows="3" required></textarea>
@@ -73,7 +73,13 @@
       <div class="foot-links">
         <a href="https://www.instagram.com/saelthorn/" target="_blank" rel="noopener">[ INSTAGRAM ]</a>
         <a href="https://www.linkedin.com/in/jerome-ladanan-41370736a/" target="_blank" rel="noopener">[ LINKEDIN ]</a>
-        <a class="resume-btn" href="assets/resume.pdf" target="_blank" rel="noopener">[ RESUME ]</a>
+        <div class="resume-menu" id="resumeMenu">
+          <button type="button" class="resume-btn" aria-haspopup="true" aria-expanded="false">[ RESUME ]</button>
+          <div class="resume-pop">
+            <a href="assets/resume-uxui.pdf" target="_blank" rel="noopener">[ UX / UI ]</a>
+            <a href="assets/resume-gamedev.pdf" target="_blank" rel="noopener">[ GAME DEV ]</a>
+          </div>
+        </div>
       </div>
       <div class="rule-thin"></div>
       <div class="foot-bottom">

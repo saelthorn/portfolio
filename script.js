@@ -1225,6 +1225,7 @@ projRows.forEach(row => {
 
 const PROTECTED_IMAGES = [
   'assets/game/mithrim/classes_races.png',
+  'assets/game/mithrim/mithrim_tileset.png',
   // add more paths here
 ];
 
@@ -1380,4 +1381,25 @@ filterButtons.forEach(btn => {
     const el = e.target.closest(SELECTOR);
     if (el) glitch(el);
   });
+})();
+
+
+// ---------------------------------------------------------------
+// Resume menu: tap to toggle on touch devices
+// ---------------------------------------------------------------
+(function () {
+  const menu = document.getElementById('resumeMenu');
+  if (!menu) return;
+  const btn = menu.querySelector('.resume-btn');
+  const touch = () => matchMedia('(hover: none)').matches;
+  const close = () => { menu.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); };
+
+  btn.addEventListener('click', (e) => {
+    if (!touch()) return;
+    e.stopPropagation();
+    const open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  });
+  document.addEventListener('click', (e) => { if (!menu.contains(e.target)) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 })();
