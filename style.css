@@ -474,11 +474,20 @@ img {
     top:-80px;left:0;bottom:auto;width:100%;
     height:calc(100vh + 160px);height:calc(100lvh + 160px);
   }
-  body::after{
+  /* vignette split into 3 pieces, each pinned to ITS OWN edge, so no piece depends on the screen height */
+  html::before{           /* top edge: follows the top of the visible screen */
+    content:"";position:fixed;left:0;right:0;top:0;height:90px;z-index:1001;pointer-events:none;
+    background:linear-gradient(to bottom,rgba(0,0,0,.55),transparent);
+  }
+  html::after{            /* bottom edge: follows the bottom of the visible screen */
+    content:"";position:fixed;left:0;right:0;bottom:0;height:90px;z-index:1001;pointer-events:none;
+    background:linear-gradient(to top,rgba(0,0,0,.55),transparent);
+  }
+  body::after{            /* left + right edges: tall enough that height never matters */
     top:0;left:0;right:auto;bottom:auto;width:100%;
     height:calc(100vh + 120px);height:calc(100lvh + 120px);
-    border-radius:0;
-    box-shadow:inset 0 0 70px 6px rgba(0,0,0,.5),inset 0 0 12px 2px rgba(120,160,255,.12);
+    border-radius:0;box-shadow:none;
+    background:linear-gradient(to right,rgba(0,0,0,.45),transparent 50px,transparent calc(100% - 50px),rgba(0,0,0,.45));
   }
   #loader,.project-modal,.lightbox,.crt-shutter{
     top:0;bottom:0;height:auto;
