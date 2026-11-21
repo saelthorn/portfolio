@@ -1530,9 +1530,7 @@ filterButtons.forEach(btn => {
 
 
 // ---------------------------------------------------------------
-// Random multi-letter glitch: every 1-6s (random), random visible
-// letters AND leader dots flicker through glyphs, each for its own
-// random duration
+// Random Letter Glyph Effect
 // ---------------------------------------------------------------
 (function () {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
