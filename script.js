@@ -104,6 +104,41 @@ const PROJECTS = [
     ]
   },
   {
+    slug: 'pulsestage', name: 'PULSESTAGE', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
+    summary: 'A live-music discovery and ticketing platform connecting fans with upcoming concerts and their favorite artists.',
+    role: 'UX/UI Designer',
+    tools: 'Figma',
+    image: 'assets/uxui/pulsestage/pulsestage.png',
+    sections: [
+      {
+        title: 'Overview',
+        body: 'PULSESTAGE is a live-music discovery platform designed to help fans explore upcoming concerts, follow their favorite artists, and keep track of tour schedules. The platform combines event discovery, ticket presales, and personalized concert management into a unified experience.'
+      },
+      {
+        videos: [{ src: 'assets/uxui/pulsestage/pulsestage_demo.mp4', span: 3, ratio: 'auto', fit: 'default' }],
+        textSpan: 3,
+        title: 'The Challenge',
+        body: 'Create an accessible and engaging platform where music fans can discover upcoming concerts, keep track of their favorite artists, and manage their event schedules.\n\nDesign a seamless experience that connects event discovery with ticket booking, providing users with a clear path from finding a concert to securing their tickets.'
+      },
+      {
+        title: 'Design Approach',
+        body: 'I approached the platform by separating the experience into two main areas: public event discovery and a personalized customer dashboard. The discovery experience focuses on featured concerts, event browsing, and monthly or yearly schedules, while the dashboard provides a centralized space for saved shows, followed artists, upcoming events, and ticket history.\n\nI also designed a booking and billing flow to guide users through ticket selection, payment details, and order confirmation.',
+        images: [
+          { src: 'assets/uxui/pulsestage/pulsestage_discovery.png', span: 3, ratio: 'auto', caption: 'Concert discovery and event browsing.' },
+          { src: 'assets/uxui/pulsestage/pulsestage_dashboard.png', span: 3, ratio: 'auto', caption: 'Personalized concert dashboard.' },
+        ]
+      },
+      {
+        title: 'Visual Direction',
+        body: 'The visual identity draws inspiration from live music culture, using a dark editorial aesthetic complemented by bold typography, expressive concert photography, and vibrant accent colors. The interface prioritizes visual hierarchy and readability while allowing event imagery to take center stage.'
+      },
+      {
+        title: 'Outcome',
+        body: 'PULSESTAGE brings concert discovery and ticket management together in a unified platform. The resulting design explores how event browsing, personalized schedules, and a streamlined booking experience can make following live music more convenient and engaging.'
+      }
+    ]
+  },
+  {
     slug: 'bikeplace', name: 'BIKEPLACE', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
     summary: 'An e-commerce website concept for browsing and purchasing bicycles.',
     role: 'UX/UI Designer',
@@ -129,6 +164,35 @@ const PROJECTS = [
       {
         title: 'Outcome',
         body: 'BikePlace serves as an exploration of e-commerce information architecture and interface design for a specialized retail category.'
+      }
+    ]
+  },
+  {
+    slug: 'terratide', name: 'TERRATIDE', cat: 'uxui', catLabel: 'UX/UI', status: 'ready',
+    summary: 'An e-commerce website concept for browsing and purchasing bicycles.',
+    role: 'UX/UI Designer',
+    tools: 'Figma',
+    image: 'assets/uxui/terratide.png',
+    sections: [
+      {
+        title: 'Overview',
+        body: 'A bicycle retail website concept designed to bring product discovery and online shopping into one cohesive experience.'
+      },
+      {
+        title: 'The Challenge',
+        body: 'Design an online bicycle shopping experience that helps customers navigate products, compare their options, and move through the purchasing journey without unnecessary friction.'
+      },
+      {
+        title: 'Design Approach',
+        body: 'I explored the structure of an e-commerce experience, focusing on product discovery, category navigation, product presentation, and the transition from browsing to checkout. The interface aims to make important product information easy to find.'
+      },
+      {
+        title: 'User Flow',
+        body: 'The proposed journey follows a straightforward path from entering the store and browsing bicycles to viewing a product and proceeding through the purchase flow. Wireframes and prototypes were used to explore the relationship between page structure and navigation.'
+      },
+      {
+        title: 'Outcome',
+        body: 'TERRATIDE serves as an exploration of e-commerce information architecture and interface design for a specialized retail category.'
       }
     ]
   },
@@ -255,6 +319,35 @@ const PROJECTS = [
   },
   {
     slug: 'shedungent', name: 'SHEDUNGENT', cat: 'level', catLabel: 'LEVEL DESIGN', status: 'ready',
+    summary: 'A solo-designed castle and dungeon environment in the Wrothgarian Mountains.',
+    role: 'Level Designer, Environment Designer',
+    tools: 'Unity',
+    image: 'assets/level/shed.png',
+    sections: [
+      {
+        title: 'Overview',
+        body: 'A fantasy environment inspired by The Elder Scrolls II: Daggerfall, set in the Wrothgarian Mountains. The project focuses on architectural composition, environmental storytelling, and the use of clutter and spatial layout to create an immersive location.'
+      },
+      {
+        title: 'Design Intent',
+        body: 'The goal was to create a believable fantasy location that feels integrated into its mountainous setting. Rather than relying on architecture alone, the environment uses spatial composition, props, and environmental details to establish its identity.'
+      },
+      {
+        title: 'Environment Design',
+        body: 'I focused on arranging architectural elements, clutter, and environmental details to give the location a lived-in quality. The placement and density of objects help communicate the purpose of different spaces while reinforcing the atmosphere of an older fantasy world.'
+      },
+      {
+        title: 'Spatial Composition',
+        body: 'The layout and arrangement of spaces were approached with attention to navigation, visual interest, and transitions between areas. The goal was to make the environment feel cohesive while giving each space its own character.'
+      },
+      {
+        title: 'Outcome',
+        body: 'Shedungent serves as a personal exploration of fantasy environment design, combining architectural composition, spatial layout, and environmental storytelling within the Daggerfall setting.'
+      }
+    ]
+  },
+  {
+    slug: 'daggerfall', name: 'CASTLE DAGGERFALL', cat: 'level', catLabel: 'LEVEL DESIGN', status: 'ready',
     summary: 'A solo-designed castle and dungeon environment in the Wrothgarian Mountains.',
     role: 'Level Designer, Environment Designer',
     tools: 'Unity',
@@ -1433,4 +1526,157 @@ filterButtons.forEach(btn => {
   window.addEventListener('resize', schedule);
   window.addEventListener('orientationchange', schedule);
   apply();
+})();
+
+
+// ---------------------------------------------------------------
+// Random multi-letter glitch: every 1-6s (random), random visible
+// letters AND leader dots flicker through glyphs, each for its own
+// random duration
+// ---------------------------------------------------------------
+(function () {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const MIN_WAIT = 1000;      // ms between rounds  <-- tweak
+  const MAX_WAIT = 6000;
+  const MAX_LETTERS = 16;     //                    <-- tweak
+  const MAX_DOTS = 8;         // dots glitched per round (1 to this)  <-- tweak
+  const MIN_LENGTH = 200;     // ms a letter/dot glitches (shortest)  <-- tweak
+  const MAX_LENGTH = 1500;    // ms a letter/dot glitches (longest)   <-- tweak
+  const STEP = 60;            // ms between glyph swaps
+  const CHARS = '!<>-_\\/[]{}=+*^?#%&01';
+  const rand = () => CHARS[Math.floor(Math.random() * CHARS.length)];
+  const randInt = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+
+  // ---------- letters ----------
+  function candidates() {
+    const modal = document.getElementById('projectModal');
+    const root = modal && modal.classList.contains('open') ? modal : document.querySelector('.page');
+    if (!root) return [];
+    const out = [];
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    while (w.nextNode()) {
+      const n = w.currentNode;
+      if (!/\S/.test(n.nodeValue)) continue;
+      const el = n.parentElement;
+      if (!el || el.closest('script,style,noscript,textarea,#hoursVal,.hidden,.dot-glitch')) continue;
+      const hot = el.closest('a,button,.proj-row');
+      if (hot && hot.matches(':hover,:focus-within')) continue;   // leave the hover glitch alone
+      const r = el.getBoundingClientRect();
+      if (!r.width || !r.height || r.bottom < 0 || r.top > innerHeight) continue;
+      out.push(n);
+    }
+    return out;
+  }
+
+  function glitchLetters() {
+    const nodes = candidates();
+    if (!nodes.length) return;
+
+    const spots = nodes.map(n => {
+      const idx = [];
+      const s = n.nodeValue;
+      for (let i = 0; i < s.length; i++) if (/\S/.test(s[i])) idx.push(i);
+      return idx;
+    });
+    const total = spots.reduce((a, s) => a + s.length, 0);
+    if (!total) return;
+
+    const count = Math.min(randInt(1, MAX_LETTERS), total);
+    const picks = new Set();
+    while (picks.size < count) picks.add(Math.floor(Math.random() * total));
+
+    const jobs = new Map();   // node index -> [{ pos, end }]
+    const now = performance.now();
+    picks.forEach(g => {
+      let i = 0;
+      while (g >= spots[i].length) { g -= spots[i].length; i++; }
+      if (!jobs.has(i)) jobs.set(i, []);
+      jobs.get(i).push({ pos: spots[i][g], end: now + randInt(MIN_LENGTH, MAX_LENGTH) });
+    });
+
+    jobs.forEach((letters, i) => {
+      const node = nodes[i];
+      const orig = node.nodeValue;
+      let last = orig;
+
+      const timer = setInterval(() => {
+        if (!node.isConnected || node.nodeValue !== last) { clearInterval(timer); return; }
+
+        const t = performance.now();
+        const chars = orig.split('');
+        let active = 0;
+        letters.forEach(l => {
+          if (t < l.end) { chars[l.pos] = rand(); active++; }
+        });
+
+        last = chars.join('');
+        node.nodeValue = last;
+        if (!active) clearInterval(timer);
+      }, STEP);
+    });
+  }
+
+  // ---------- dots ----------
+  const dotWidths = new WeakMap();
+  function dotWidth(fill) {
+    if (dotWidths.has(fill)) return dotWidths.get(fill);
+    const probe = document.createElement('span');
+    probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;';
+    probe.textContent = '.'.repeat(100);
+    fill.appendChild(probe);
+    const w = probe.getBoundingClientRect().width / 100;
+    probe.remove();
+    dotWidths.set(fill, w);
+    return w;
+  }
+
+  function glitchDots() {
+    const modal = document.getElementById('projectModal');
+    if (modal && modal.classList.contains('open')) return;   // no leaders inside case studies
+
+    const fills = Array.from(document.querySelectorAll('.page .leader .fill')).filter(f => {
+      if (f.closest('.hidden')) return false;
+      const hot = f.closest('.proj-row');
+      if (hot && hot.matches(':hover,:focus-within')) return false;
+      const r = f.getBoundingClientRect();
+      return r.width > 0 && r.height > 0 && r.bottom >= 0 && r.top <= innerHeight;
+    });
+    if (!fills.length) return;
+
+    const count = randInt(1, MAX_DOTS);
+    for (let c = 0; c < count; c++) {
+      const fill = fills[Math.floor(Math.random() * fills.length)];
+      const dw = dotWidth(fill);
+      if (!(dw > 0)) continue;
+      const n = Math.floor(fill.clientWidth / dw);
+      if (n < 1) continue;
+
+      const span = document.createElement('span');
+      span.className = 'dot-glitch';
+      span.style.left = (randInt(0, n - 1) * dw) + 'px';
+      span.style.width = dw + 'px';
+      span.textContent = rand();
+      fill.appendChild(span);
+
+      const end = performance.now() + randInt(MIN_LENGTH, MAX_LENGTH);
+      const timer = setInterval(() => {
+        if (!span.isConnected) { clearInterval(timer); return; }
+        if (performance.now() >= end) { clearInterval(timer); span.remove(); return; }
+        span.textContent = rand();
+      }, STEP);
+    }
+  }
+
+  // ---------- one round ----------
+  function glitchRound() {
+    if (document.hidden) return;
+    if (document.querySelector('.page.intro-dots, .crt-shutter, #loader')) return;
+    glitchLetters();
+    glitchDots();
+  }
+
+  (function loop() {
+    setTimeout(() => { glitchRound(); loop(); }, randInt(MIN_WAIT, MAX_WAIT));
+  })();
 })();
