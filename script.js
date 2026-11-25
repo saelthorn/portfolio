@@ -1535,9 +1535,9 @@ filterButtons.forEach(btn => {
 (function () {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const MIN_WAIT = 1000;      // ms between rounds  <-- tweak
+  const MIN_WAIT = 3000;      // ms between rounds  <-- tweak
   const MAX_WAIT = 6000;
-  const MAX_LETTERS = 16;     //                    <-- tweak
+  const MAX_LETTERS = 12;     //                    <-- tweak
   const MAX_DOTS = 8;         // dots glitched per round (1 to this)  <-- tweak
   const MIN_LENGTH = 200;     // ms a letter/dot glitches (shortest)  <-- tweak
   const MAX_LENGTH = 1500;    // ms a letter/dot glitches (longest)   <-- tweak
